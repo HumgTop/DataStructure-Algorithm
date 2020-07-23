@@ -1,8 +1,6 @@
 package top.humg.a02_queue;
 
 
-import java.util.Arrays;
-
 public class ArrayQueueCircle {
     public static void main(String[] args) {
         CircleArray queue = new CircleArray(4);
