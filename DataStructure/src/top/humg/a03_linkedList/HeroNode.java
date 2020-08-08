@@ -1,4 +1,4 @@
-package top.humg.linkedList;
+package top.humg.a03_linkedList;
 
 /**
  * 链表的节点
@@ -8,6 +8,8 @@ public class HeroNode {
     String name;
     String nickName;
     HeroNode next;
+
+    public HeroNode(){}
 
     public HeroNode(int no, String name, String nickName) {
         this.no = no;

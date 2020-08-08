@@ -1,4 +1,4 @@
-package top.humg.linkedList;
+package top.humg.a03_linkedList;
 
 /**
  * 单链表
@@ -6,6 +6,10 @@ package top.humg.linkedList;
 public class SingleLinkedList {
     //先初始化一个头结点：不存放具体的数据
     private HeroNode headNode = new HeroNode(0, "", "", null);
+
+    public HeroNode getHeadNode() {
+        return headNode;
+    }
 
     /**
      * 将newNode节点添加到链表的末尾
@@ -38,4 +42,34 @@ public class SingleLinkedList {
             temp = temp.next;
         }
     }
+
+    //更新节点信息
+    public void update(HeroNode newHeroNode) {
+        HeroNode temp = headNode;
+        //遍历链表直到末尾
+        while (temp.next != null) {
+            if (temp.no == newHeroNode.no) {
+                temp.name = newHeroNode.name;
+                temp.nickName = newHeroNode.nickName;
+                break;
+            }
+            temp = temp.next;//temp指向下个节点
+        }
+    }
+
+    //根据编号删除节点
+    public void del(int no) {
+        HeroNode temp = headNode;
+        //遍历链表直到末尾
+        while (temp.next != null) {
+            HeroNode before = temp;//暂存temp指向的节点
+            temp = temp.next;//temp指向下个节点
+            if (temp.no == no) {
+                //断开temp在链表中的连接，因为没有任何引用指向该节点，会被jvm垃圾回收机制回收
+                before.next = temp.next;
+            }
+
+        }
+    }
+
 }
