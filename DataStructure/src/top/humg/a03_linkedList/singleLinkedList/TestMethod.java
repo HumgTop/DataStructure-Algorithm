@@ -1,4 +1,4 @@
-package top.humg.a03_linkedList;
+package top.humg.a03_linkedList.singleLinkedList;
 
 import org.junit.Test;
 
@@ -287,8 +287,6 @@ public class TestMethod {
                 shortCur = shortNext;
                 continue;
             }
-
-
             longCur = longCur.next;//cur指向后移
         }
 

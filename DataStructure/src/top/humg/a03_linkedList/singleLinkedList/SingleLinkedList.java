@@ -1,4 +1,4 @@
-package top.humg.a03_linkedList;
+package top.humg.a03_linkedList.singleLinkedList;
 
 /**
  * 单链表
