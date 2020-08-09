@@ -1,8 +1,6 @@
 package top.humg.a03_linkedList.doubleLinkedList;
 
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 public class DoubleLinkedList {
     //先初始化一个头结点：不存放具体的数据
     private HeroNode headNode = new HeroNode(0, "", "", null, null);

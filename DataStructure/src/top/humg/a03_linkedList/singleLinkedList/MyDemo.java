@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.Stack;
 
-public class TestMethod {
+public class MyDemo {
     @Test
     public void test1() {
         HeroNode node1 = new HeroNode(1, "宋江", "及时雨");
