@@ -2,12 +2,13 @@ package top.humg.a04_stack;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class MyTest {
     @Test
     public void test1() {
-        String content = "3+2*6-2";
+        String content = "34+5*6-";
         //正则表达式，用于匹配非数字串，+号用于匹配出多个非数字串
         String regEx = "\\D+";  //匹配非数字字符串
         Pattern pattern = Pattern.compile(regEx);
@@ -43,5 +44,9 @@ public class MyTest {
 
     @Test
     public void test4() {
+        String suffixExpression = "3 4 + 5 * 6 -";  //定义一个后缀表达式
+        PolandNotation polandNotation = new PolandNotation(suffixExpression);
+        List<String> list = polandNotation.getListString();
+        System.out.println(list.toString());
     }
 }

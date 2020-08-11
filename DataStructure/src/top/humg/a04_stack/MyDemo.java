@@ -2,6 +2,7 @@ package top.humg.a04_stack;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -74,5 +75,16 @@ public class MyDemo {
         Calculator calculator = new Calculator();
         int result = calculator.calculate("70+2*6-4");
         System.out.println(result);
+    }
+
+    /**
+     * 测试逆波兰表达式计算器
+     */
+    @Test
+    public void testPolandNotation() {
+        String suffixExpression = "4 5 * 8 - 60 + 8 2 / +";  //定义一个后缀表达式
+        PolandNotation polandNotation = new PolandNotation(suffixExpression);
+        int cal = polandNotation.cal();
+        System.out.println(cal);
     }
 }
