@@ -83,8 +83,24 @@ public class MyDemo {
     @Test
     public void testPolandNotation() {
         String suffixExpression = "4 5 * 8 - 60 + 8 2 / +";  //定义一个后缀表达式
+        //在构造器中传入后缀表达式参数
         PolandNotation polandNotation = new PolandNotation(suffixExpression);
+        //计算结果
         int cal = polandNotation.cal();
         System.out.println(cal);
+    }
+
+    /**
+     * 测试中缀转后缀表达式方法，并计算结果
+     */
+    @Test
+    public void testInfixToSuffix() {
+        PolandNotation polandNotation = new PolandNotation();
+        //使用计算器提供的方法将中缀表达式转为后缀表达式
+        List<String> suffixExpression = polandNotation.infixToSuffix("1+((2+3)*444)-55");
+        System.out.println(suffixExpression);
+        //传入后缀表达式参数，计算结果
+        int result = polandNotation.myCal(suffixExpression);
+        System.out.println(result);
     }
 }

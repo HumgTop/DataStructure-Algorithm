@@ -2,7 +2,9 @@ package top.humg.a04_stack;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 public class MyTest {
@@ -48,5 +50,49 @@ public class MyTest {
         PolandNotation polandNotation = new PolandNotation(suffixExpression);
         List<String> list = polandNotation.getListString();
         System.out.println(list.toString());
+    }
+
+    @Test
+    public void test5() {
+        String str = "hmg";
+        char[] chars = str.toCharArray();
+//        String s = new String(chars);
+        String s = String.valueOf(chars);
+        System.out.println(s);
+    }
+
+    /**
+     * 初始化一个list集合，存放初步解析的中缀表达式（一个字符串拆解为多个元素字符串）
+     */
+    @Test
+    public void test6() {
+        String infixExpression = "1+((2+3)*4334)-5555";
+        char[] chars = infixExpression.toCharArray();   //字符串转为字符数组
+        //初始化一个list集合，存放初步解析的中缀表达式（一个字符串拆解为多个元素字符串）
+        ArrayList<String> tempList = new ArrayList<>();
+        //遍历char数组
+        for (int index = 0; index < chars.length; index++) {
+            char each = chars[index];
+            if (Character.isDigit(each)) {
+                //因为operand可能会增加长度，所以使用StringBuilder
+                StringBuilder operand = new StringBuilder(String.valueOf(each));    //char转string暂存
+                //考虑多位数情况
+                //如果数组的下一位是数字，且不是数组的末尾，持续循环
+                while (index < chars.length - 1 && Character.isDigit(chars[index + 1])) {
+                    operand.append(chars[index + 1]);
+                    index++;    //index后移因为char[index+1]已经被添加，跳过此次遍历
+                }
+                tempList.add(operand.toString());   //添加到暂存集合中
+            } else { //如果是运算符
+                String operator = String.valueOf(each);   //转为字符串
+                tempList.add(operator); //添加到暂存集合中
+            }
+        }
+        System.out.println(tempList);
+    }
+
+    @Test
+    public void test7(){
+
     }
 }
