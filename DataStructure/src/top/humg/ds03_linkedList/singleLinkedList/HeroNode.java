@@ -1,17 +1,15 @@
-package top.humg.a03_linkedList.doubleLinkedList;
+package top.humg.ds03_linkedList.singleLinkedList;
 
 /**
- * 双链表节点类
+ * 链表的节点
  */
 public class HeroNode {
     int no;
     String name;
     String nickName;
-    HeroNode pre;//保存前一个节点
-    HeroNode next;//保存后一个节点
+    HeroNode next;
 
-    public HeroNode() {
-    }
+    public HeroNode(){}
 
     public HeroNode(int no, String name, String nickName) {
         this.no = no;
@@ -19,11 +17,10 @@ public class HeroNode {
         this.nickName = nickName;
     }
 
-    public HeroNode(int no, String name, String nickName, HeroNode pre, HeroNode next) {
+    public HeroNode(int no, String name, String nickName, HeroNode next) {
         this.no = no;
         this.name = name;
         this.nickName = nickName;
-        this.pre = pre;
         this.next = next;
     }
 
@@ -51,14 +48,6 @@ public class HeroNode {
         this.nickName = nickName;
     }
 
-    public HeroNode getPre() {
-        return pre;
-    }
-
-    public void setPre(HeroNode pre) {
-        this.pre = pre;
-    }
-
     public HeroNode getNext() {
         return next;
     }
@@ -69,22 +58,11 @@ public class HeroNode {
 
     @Override
     public String toString() {
-        if (next == null) {
-            return "HeroNode{" +
-                    "no=" + no +
-                    ", name='" + name + '\'' +
-                    ", nickName='" + nickName + '\'' +
-                    ", pre='" + pre.no + '\'' +
-                    ", next='" + null + '\'' +
-                    '}';
-        }
-
         return "HeroNode{" +
                 "no=" + no +
                 ", name='" + name + '\'' +
                 ", nickName='" + nickName + '\'' +
-                ", pre='" + pre.no + '\'' +
-                ", next='" + next.no + '\'' + //打印最后一个节点时，由于next域为null，所以会产生空指针异常
+                ", next=" + next +
                 '}';
     }
 }

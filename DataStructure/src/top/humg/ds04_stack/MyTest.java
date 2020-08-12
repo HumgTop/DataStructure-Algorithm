@@ -1,10 +1,9 @@
-package top.humg.a04_stack;
+package top.humg.ds04_stack;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import java.util.regex.Pattern;
 
 public class MyTest {

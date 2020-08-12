@@ -1,4 +1,4 @@
-package top.humg.a01_sparsearray;
+package top.humg.ds01_sparsearray;
 
 
 public class SparseArray {

@@ -1,4 +1,4 @@
-package top.humg.a04_stack;
+package top.humg.ds04_stack;
 
 /**
  * 使用数组模拟栈结构

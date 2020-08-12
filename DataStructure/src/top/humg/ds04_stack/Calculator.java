@@ -1,4 +1,4 @@
-package top.humg.a04_stack;
+package top.humg.ds04_stack;
 
 import java.util.regex.Pattern;
 

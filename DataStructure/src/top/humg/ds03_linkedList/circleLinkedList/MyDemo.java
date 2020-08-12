@@ -1,8 +1,6 @@
-package top.humg.a03_linkedList.circleLinkedList;
+package top.humg.ds03_linkedList.circleLinkedList;
 
 import org.junit.Test;
-
-import java.lang.reflect.Constructor;
 
 public class MyDemo {
     /**

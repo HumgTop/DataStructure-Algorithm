@@ -1,4 +1,4 @@
-package top.humg.a03_linkedList.singleLinkedList;
+package top.humg.ds03_linkedList.singleLinkedList;
 
 import org.junit.Test;
 

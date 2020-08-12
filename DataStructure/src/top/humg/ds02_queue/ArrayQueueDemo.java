@@ -1,4 +1,4 @@
-package top.humg.a02_queue;
+package top.humg.ds02_queue;
 
 
 import java.util.Arrays;
