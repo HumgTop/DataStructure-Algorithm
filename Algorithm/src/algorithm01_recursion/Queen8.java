@@ -11,6 +11,7 @@ public class Queen8 {
 
     public static void main(String[] args) {
         check(0);   //将第1到8个皇后放置在棋盘上
+//        checkReview(0);   //将第1到8个皇后放置在棋盘上
         System.out.printf("judge方法的执行次数是%d次%n", judgeCount);
     }
 
@@ -64,6 +65,28 @@ public class Queen8 {
             arr[n] = i;
             //递归体：什么情况下进行递归
             if (judge(n)) {
+                check(n + 1);
+            }
+        }
+    }
+
+    /**
+     * 复习
+     * 2020年8月13日09:10:43
+     *
+     * @param n
+     */
+    public static void checkReview(int n) {
+        //设置递归头
+        if (n == max) {
+            print();
+            return;
+        }
+        //每一个皇后都要放置8次位置并进行judge判断
+        for (int i = 0; i < max; i++) {
+            arr[n] = i; //进行一次放置
+            if (judge(n)) {
+                //如果不与之前的皇后冲突，则递归调用
                 check(n + 1);
             }
         }

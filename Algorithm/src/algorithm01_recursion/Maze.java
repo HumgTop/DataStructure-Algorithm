@@ -29,7 +29,9 @@ public class Maze {
         viewOfMap();
         System.out.println("-------------");
         setWay2(1, 1);
+//        setWayReview(1, 1);
         viewOfMap();
+
     }
 
     /**
@@ -83,6 +85,42 @@ public class Maze {
             //如果该节点的值为1,2,3。说明下个节点的状态已知，不需要再进行判断，返回false
             return false;
         }
+    }
+
+    /**
+     * 复习
+     * 2020年8月13日08:55:50
+     *
+     * @param i
+     * @param j
+     * @return
+     */
+    public static boolean setWayReview(int i, int j) {
+        //**设置递归头
+        //如果map[6][5]==2：可以走通
+        if (map[6][5] == 2) {
+            return true;
+        }
+        //如果当前点还未走过
+        if (map[i][j] == 0) {
+            //先设置该点可以走通
+            map[i][j] = 2;
+            //设置递归体，如果向下走可以走通返回true
+            if (setWayReview(i + 1, j)) {
+                return true;
+            } else if (setWayReview(i, j + 1)) {
+                return true;
+            } else if (setWayReview(i, j - 1)) {
+                return true;
+            } else if (setWayReview(i - 1, j)) {
+                return true;
+            } else
+                //如果都走不通设置该点为false
+                map[i][j] = 3;
+            return false;
+        } else
+            //如果该点是障碍物1、已经走过2、无法走通3
+            return false;
     }
 
     /**

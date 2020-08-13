@@ -14,6 +14,7 @@ public class BubbleSort {
     public static void main(String[] args) {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
         int[] sort = sort(arr);
+//        int[] sort = sortReview(arr);
         System.out.println(Arrays.toString(sort));
     }
 
@@ -57,6 +58,36 @@ public class BubbleSort {
                 }
             }
             //内层循环1轮后，如果一次交换都没有发生，说明排序已经完成。直接返回arr
+            if (flag) {
+                return arr;
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * 对冒泡排序的复习
+     * 2020年8月13日08:54:07
+     *
+     * @param arr
+     * @return
+     */
+    public static int[] sortReview(int[] arr) {
+        /*
+        第一次复习
+         */
+        //总共进行arr.length-1轮排序
+        for (int i = 0; i < arr.length - 1; i++) {
+            boolean flag = true;
+            //每轮进行arr.length-i次相邻元素比较和交换
+            for (int j = 1; j < arr.length - i; j++) {
+                if (arr[j - 1] > arr[j]) {
+                    int temp = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = temp;
+                    flag = false;
+                }
+            }
             if (flag) {
                 return arr;
             }
