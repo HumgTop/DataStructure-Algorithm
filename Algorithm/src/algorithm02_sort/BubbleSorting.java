@@ -10,7 +10,7 @@ import java.util.Date;
  * 冒泡排序法及其优化
  * 冒泡排序的时间复杂度：O(n^2)（两层嵌套循环）
  */
-public class BubbleSort {
+public class BubbleSorting {
     public static void main(String[] args) {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
         int[] sort = sort(arr);
@@ -43,7 +43,7 @@ public class BubbleSort {
      */
     public static int[] sort(int[] arr) {
         //遍历数组
-        //第一层循环，每循环一次（完成一轮从头到尾（不包括已确定位置）的相邻元素比较和交换）确定一个位置的排序结果（5个元素，确定4个位置即可，所以 i<4）
+        //第一层循环，每循环一次（完成一轮从头到尾（不包括已确定位置）的相邻元素比较和交换）确定一个位置（从数组末位到首位）的排序结果（5个元素，确定4个位置即可，所以 i<4）
         for (int i = 0; i < arr.length - 1; i++) {
             boolean flag = true;    //默认排序已完成
             //第二层循环，每循环一次即比较一次相邻元素的大小，并将较大元素交换到数组下标较大的位置
