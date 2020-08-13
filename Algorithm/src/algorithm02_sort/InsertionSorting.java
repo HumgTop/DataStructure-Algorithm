@@ -44,16 +44,16 @@ public class InsertionSorting {
         //**需要进行arr.length-1轮插入
         for (int i = 1; i < arr.length; i++) {
             int insertVal = arr[i];   //定义待插入值
-            int insertIndex = i - 1;  //定义有序表的最后一位元素下标
+            int insertIndex;
             //**将待插入值与有序表元素进行比较（从后往前），如果待插入值较小，则将参加比较的有序表元素后移
             //insertIndex>=0条件为了防止数组下标越界
-            while (insertIndex >= 0 && insertVal < arr[insertIndex]) {
+            //该循环执行到arr[insertIndex]<insertVal时结束
+            for (insertIndex = i - 1; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex--) {
                 arr[insertIndex + 1] = arr[insertIndex];    //将有序表元素后移
-                insertIndex--;
             }
             //如果insertIndex发生了变化
             if (insertIndex != i - 1) {
-                //最后一次循环时，insertVal找到了它的位置insertIndex，因为insertIndex多减了一次所以+1
+                //因为arr[insertIndex]<insertVal，所以insertVal插入的位置应该在后一位
                 arr[insertIndex + 1] = insertVal;
             }
         }
