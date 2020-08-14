@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 希尔排序
  */
-public class ShellSorting {
+public class ShellSort {
     public static void main(String[] args) {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0}; //待排序数组
         int[] sort = sort(arr);
@@ -35,13 +35,13 @@ public class ShellSorting {
     }
 
     /**
-     * 交换法
+     * 移位法
+     * 从有序表尾部向前遍历，将元素向后移一位，直到找到insertVal需要插入的正确位置为止
      *
      * @param arr
      * @return
      */
     private static int[] sort(int[] arr) {
-        int temp;
         //每轮循环gap都会减少，直至等于1
         //若gap=n，说明数据被分成n个增量序列，每个序列元素下标增量为n
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {

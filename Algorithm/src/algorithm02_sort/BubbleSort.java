@@ -10,7 +10,7 @@ import java.util.Date;
  * 冒泡排序法及其优化
  * 冒泡排序的时间复杂度：O(n^2)（两层嵌套循环）
  */
-public class BubbleSorting {
+public class BubbleSort {
     public static void main(String[] args) {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
         int[] sort = sort(arr);
