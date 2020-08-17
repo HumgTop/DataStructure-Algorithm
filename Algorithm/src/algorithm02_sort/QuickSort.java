@@ -1,6 +1,9 @@
 package algorithm02_sort;
 
+import org.junit.Test;
+
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * 快速排序
@@ -8,9 +11,35 @@ import java.util.Arrays;
 public class QuickSort {
     public static void main(String[] args) {
         int[] arr = {-9, 78, 0, 22, 0, 23, -5, -567, 70}; //待排序数组
-        int[] sort = sort(arr, 0, arr.length - 1);
+//        int[] sort = sort(arr, 0, arr.length - 1);
+        int[] sort = sort2(arr, 0, arr.length - 1);
 //        int[] sort = sortReview(arr);
         System.out.println(Arrays.toString(sort));
+    }
+
+
+    /**
+     * 测试插入排序的速度
+     */
+    @Test
+    public void test1() {
+        //对80000个元素进行冒泡排序
+        int[] arr = new int[8000000];
+        //给数组注入随机数
+        for (int i = 0; i < 8000000; i++) {
+            arr[i] = (int) (Math.random() * 8000000);    //Math.random方法产生的是0~1之间的小数
+        }
+        for (int i = 0; i < 10; i++) {
+            System.out.println(arr[i]);
+        }
+        Date before = new Date(); //排序前的时间
+        sort2(arr, 0, arr.length - 1);
+        Date after = new Date();    //排序后的时间
+        System.out.printf("快速排序耗时%d毫秒%n", after.getTime() - before.getTime());
+        for (int i = 0; i < 10; i++) {
+            System.out.println(arr[i]);
+        }
+        //运行结果为14毫秒左右
     }
 
     /**
@@ -40,9 +69,7 @@ public class QuickSort {
                 break;
             }
             //此时arr[l]>=pivot且arr[r]<=pivot，两者进行交换
-            temp = arr[l];
-            arr[l] = arr[r];
-            arr[r] = temp;
+            swap(arr, l, r);
 
             //如果存在值==pivot，且已经被交换过一次，需要为其进行指针递增或递减。
             // 否则因为不能通过上面的while循环条件而陷入死循环（l恒小于r），该值在左侧和右侧反复交换
@@ -53,6 +80,81 @@ public class QuickSort {
                 l++;
             }
         }
+        //如不对l和r进行递增递递减，会出现栈溢出
+        if (l == r) {
+            l++;
+            r--;
+        }
+        //**向左递归
+        if (r > left) {
+            sort(arr, left, r);
+        }
+        //向右递归
+        if (l < right) {
+            sort(arr, l, right);
+        }
         return arr;
     }
+
+    /**
+     * 来自知乎的第二种写法
+     * 每次基准值的选取都是待排序分区的第一个元素
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @return
+     */
+    private static int[] sort2(int[] arr, int left, int right) {
+        //递归头：知道left>=right，所有元素分区排序结束
+        if (left < right) {
+            int partitionIndex = partition(arr, left, right);
+            //左递归
+            sort2(arr, left, partitionIndex - 1);
+            //右递归
+            sort2(arr, partitionIndex + 1, right);
+        }
+        return arr;
+    }
+
+    /**
+     * 分区操作，将比基准值小的放在左侧，比基准值大的放在右侧
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @return 基准值的下标
+     */
+    private static int partition(int[] arr, int left, int right) {
+        //设定基准值下标
+        int pivot = left;
+        int index = pivot + 1;  //相当于l指针
+        //i指针（相当于r指针）从数组最左端（不包括arr[left]）向right处移动
+        for (int i = index; i <= right; i++) {
+            //如果向右移动过程中，i指针处小于基准值的值与index指针处的值进行交换
+            if (arr[i] < arr[pivot]) {
+                swap(arr, i, index);
+                index++;
+            }
+        }
+        //**此时index-1指向的是比左侧分区的末尾元素（比基准值小的元素）
+        //**将基准值交换到正确的位置（满足左侧分区小于基准值，右侧分区大于基准值）
+        swap(arr, pivot, index - 1);
+        //返回此时基准值的下标
+        return index - 1;
+    }
+
+    /**
+     * 对arr[i]和arr[j]的元素进行交换
+     *
+     * @param arr
+     * @param i
+     * @param j
+     */
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
 }
