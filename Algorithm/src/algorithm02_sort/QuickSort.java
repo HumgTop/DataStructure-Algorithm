@@ -126,22 +126,25 @@ public class QuickSort {
      * @return 基准值的下标
      */
     private static int partition(int[] arr, int left, int right) {
-        //设定基准值下标
+        //将最左侧元素作为基准值pivot
         int pivot = left;
-        int index = pivot + 1;  //相当于l指针
-        //i指针（相当于r指针）从数组最左端（不包括arr[left]）向right处移动
-        for (int i = index; i <= right; i++) {
-            //如果向右移动过程中，i指针处小于基准值的值与index指针处的值进行交换
-            if (arr[i] < arr[pivot]) {
-                swap(arr, i, index);
-                index++;
+        int lPointer = pivot + 1;  //相当于l指针
+        //r指针从数组最左端（不包括arr[left]）向right处移动
+        for (int rPointer = lPointer; rPointer <= right; rPointer++) {
+            //如果向右移动过程中，r指针处小于基准值的值与index指针处的值进行交换
+            if (arr[rPointer] < arr[pivot]) {
+                /*如果rPointer==lPointer时，arr[rPointer]<arr[pivot]也需要进行交换（需要让lPointer++，否则下次
+                交换时lPointer指向的小于基准值的元素会被交换到右侧）
+                 */
+                swap(arr, rPointer, lPointer);
+                lPointer++;
             }
         }
         //**此时index-1指向的是比左侧分区的末尾元素（比基准值小的元素）
         //**将基准值交换到正确的位置（满足左侧分区小于基准值，右侧分区大于基准值）
-        swap(arr, pivot, index - 1);
+        swap(arr, pivot, lPointer - 1);
         //返回此时基准值的下标
-        return index - 1;
+        return lPointer - 1;
     }
 
     /**
@@ -155,6 +158,51 @@ public class QuickSort {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
+    }
+
+    /**
+     * 复习
+     * 2020年8月17日15:33:06
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @return
+     */
+    private static int[] sortReview(int[] arr, int left, int right) {
+        //设置递归头
+        if (left < right) {
+            int partitionIndex = partitionReview(arr, left, arr.length - 1);
+            //左递归
+            sortReview(arr, left, partitionIndex - 1);
+            //右递归
+            sortReview(arr, partitionIndex + 1, right);
+        }
+        return arr;
+    }
+
+    /**
+     * 复习
+     * 2020年8月17日15:22:43
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @return
+     */
+    private static int partitionReview(int[] arr, int left, int right) {
+        int pivot = left;
+        int lPointer = pivot + 1;
+        //r指针向后遍历到right为止，只要比基准值小的值都交换到左侧
+        for (int rPointer = lPointer; rPointer <= right; rPointer++) {
+            if (arr[rPointer] < arr[pivot]) {
+                swap(arr, rPointer, lPointer);
+                lPointer++;
+            }
+        }
+        //最后交换基准值到正确的位置
+        swap(arr, pivot, lPointer - 1);
+        return lPointer - 1;
     }
 
 }
