@@ -24,9 +24,9 @@ public class QuickSort {
     @Test
     public void test1() {
         //对80000个元素进行冒泡排序
-        int[] arr = new int[8000000];
+        int[] arr = new int[80000];
         //给数组注入随机数
-        for (int i = 0; i < 8000000; i++) {
+        for (int i = 0; i < 80000; i++) {
             arr[i] = (int) (Math.random() * 8000000);    //Math.random方法产生的是0~1之间的小数
         }
         for (int i = 0; i < 10; i++) {
@@ -39,7 +39,7 @@ public class QuickSort {
         for (int i = 0; i < 10; i++) {
             System.out.println(arr[i]);
         }
-        //运行结果为14毫秒左右
+        //运行结果为8毫秒左右
     }
 
     /**
@@ -202,6 +202,7 @@ public class QuickSort {
         }
         //最后交换基准值到正确的位置
         swap(arr, pivot, lPointer - 1);
+        //返回基准值的索引
         return lPointer - 1;
     }
 
