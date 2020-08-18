@@ -12,7 +12,6 @@ public class SelectSort {
     public static void main(String[] args) {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
         int[] sort = sort(arr);
-//        int[] sort = sortReview(arr);
         System.out.println(Arrays.toString(sort));
     }
 
@@ -60,5 +59,38 @@ public class SelectSort {
             }
         }
         return arr;
+    }
+
+    /**
+     * 复习
+     * 2020年8月18日15:08:15
+     *
+     * @param arr
+     * @return
+     */
+    public static int[] sortReview(int[] arr) {
+        //进行arr.length-1次比较，每次比较确定一个位置的元素（从前往后）
+        for (int i = 0; i < arr.length - 1; i++) {
+            int minIndex = i; //先假设一个最小值的下标
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            if (minIndex != i) {
+                //确定arr[i]处的元素
+                int temp = arr[i];
+                arr[i] = arr[minIndex];
+                arr[minIndex] = temp;
+            }
+        }
+        return arr;
+    }
+
+    @Test
+    public void testReview(){
+        int[] arr = {3, 9, -1, 10, 20}; //待排序数组
+        int[] sort = sortReview(arr);
+        System.out.println(Arrays.toString(sort));
     }
 }

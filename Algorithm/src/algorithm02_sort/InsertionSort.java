@@ -53,10 +53,42 @@ public class InsertionSort {
             }
             //如果insertIndex发生了变化
             if (insertIndex != i - 1) {
-                //因为arr[insertIndex]<insertVal，所以insertVal插入的位置应该在后一位
+                //此时insertIndex=-1或者arr[insertIndex]<insertVal，所以insertVal插入的位置应该在insertIndex+1
                 arr[insertIndex + 1] = insertVal;
             }
         }
         return arr;
+    }
+
+    /**
+     * 复习
+     * 2020年8月18日11:42:12
+     *
+     * @param arr
+     * @return
+     */
+    public static int[] sortReview(int[] arr) {
+        /*
+        将数组分为有序表（左侧）和无序表（右侧），有序表开始只有1个元素
+        遍历无序表，将其元素插入到有序表正确的位置
+         */
+        for (int i = 1; i < arr.length; i++) {
+            //将当前元素arr[i]插入到正确的位置
+            int insertVal = arr[i];
+            int insertIndex;
+            for (insertIndex = i - 1; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex--) {
+                arr[insertIndex + 1] = arr[insertIndex]; //没有找到正确位置，元素后移一位
+            }
+            //此时insertIndex==-1或者insertVal>arr[insertIndex]，此时插入insertVal
+            arr[insertIndex + 1] = insertVal;
+        }
+        return arr;
+    }
+
+    @Test
+    public void testReview() {
+        int[] arr = {3, 9, -1, 10, 20}; //待排序数组
+        int[] sort = sortReview(arr);
+        System.out.println(Arrays.toString(sort));
     }
 }

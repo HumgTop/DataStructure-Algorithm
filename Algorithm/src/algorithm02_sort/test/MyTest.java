@@ -12,6 +12,8 @@ public class MyTest {
 
     @Test
     public void test2(){
-        System.out.println(3/10);
+//        System.out.println(3/10);
+        int length = Integer.toString(223).length();
+        System.out.println(length);
     }
 }

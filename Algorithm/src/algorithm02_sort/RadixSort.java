@@ -96,4 +96,71 @@ public class RadixSort {
         }
         return maxDigit;
     }
+
+
+/**
+ * 基本思路：
+ * 1.将所有元素从个位开始，根据该位置的大小放入不同的桶中，再依次从桶中取回元素到源数组（桶序号从小到大）
+ * 2.从个位开始到数组中最大值的最高位依次执行 1. 步骤
+ *
+ */
+    /**
+     * 复习
+     * 2020年8月18日08:38:53
+     *
+     * @param arr
+     * @return
+     */
+    public static int[] sortReview(int[] arr) {
+        //获取数组中最大值的最高位
+        int maxValue = arr[0];
+        for (int value : arr) {
+            if (value > maxValue) {
+                maxValue = value;
+            }
+        }
+        //将maxValue转为字符串获取长度
+        int length = Integer.toString(maxValue).length();
+        //创建桶
+        int[][] bucket = new int[10][arr.length];
+        //创建桶元素计数器
+        int[] bucketElementCounter = new int[10];
+
+        //每次循环完成一次桶排序，共循环length次
+        for (int i = 0, n = 1; i < length; i++, n *= 10) {
+            /*
+            先存入桶中，再取回源数组
+             */
+
+            //将数组内所有元素放入桶中
+            for (int value : arr) {
+                //获取元素在该位上的值
+                int digitOfElement = value / n % 10;
+                //存入对应的桶中（此处的bucketElementCounter计数器应为0，所以在下处需重置计数器）
+                bucket[digitOfElement][bucketElementCounter[digitOfElement]] = value;
+                bucketElementCounter[digitOfElement]++;
+            }
+            //定义源数组指针
+            int arrIndex = 0;
+            //遍历桶数组，取回元素到源数组中
+            for (int j = 0; j < 10; j++) {
+                if (bucket[j].length == 0) {
+                    continue;
+                }
+                for (int k = 0; k < bucketElementCounter[j]; k++) {
+                    arr[arrIndex++] = bucket[j][k];
+                }
+                //清空桶计数器
+                bucketElementCounter[j] = 0;
+            }
+        }
+        return arr;
+    }
+
+    @Test
+    public void testReview() {
+        int[] arr = {53, 3, 542, 748, 14, 214};
+        int[] sortedArr = sortReview(arr);
+        System.out.println(Arrays.toString(sortedArr));
+    }
 }

@@ -11,9 +11,7 @@ import java.util.Date;
 public class QuickSort {
     public static void main(String[] args) {
         int[] arr = {-9, 78, 0, 22, 0, 23, -5, -567, 70}; //待排序数组
-//        int[] sort = sort(arr, 0, arr.length - 1);
         int[] sort = sort2(arr, 0, arr.length - 1);
-//        int[] sort = sortReview(arr);
         System.out.println(Arrays.toString(sort));
     }
 
@@ -163,6 +161,7 @@ public class QuickSort {
     /**
      * 复习
      * 2020年8月17日15:33:06
+     * 2020年8月18日10:29:10
      *
      * @param arr
      * @param left
@@ -170,9 +169,14 @@ public class QuickSort {
      * @return
      */
     private static int[] sortReview(int[] arr, int left, int right) {
-        //设置递归头
+        /*
+        思路：
+            -设定基准值，将比基准值小的元素放在左侧，比基准值大的元素放在右侧
+            -递归执行上步骤，直到所有元素排序完成
+         */
+        //递归头
         if (left < right) {
-            int partitionIndex = partitionReview(arr, left, arr.length - 1);
+            int partitionIndex = partitionReview(arr, left, right); //获取基准值的数组下标
             //左递归
             sortReview(arr, left, partitionIndex - 1);
             //右递归
@@ -184,26 +188,34 @@ public class QuickSort {
     /**
      * 复习
      * 2020年8月17日15:22:43
+     * 2020年8月18日10:35:28
      *
      * @param arr
      * @param left
      * @param right
-     * @return
+     * @return 基准值下标
      */
     private static int partitionReview(int[] arr, int left, int right) {
-        int pivot = left;
-        int lPointer = pivot + 1;
-        //r指针向后遍历到right为止，只要比基准值小的值都交换到左侧
-        for (int rPointer = lPointer; rPointer <= right; rPointer++) {
-            if (arr[rPointer] < arr[pivot]) {
-                swap(arr, rPointer, lPointer);
-                lPointer++;
+        int pivot = left; //设定基准值下标
+        //分区
+        int lIndex = left + 1;
+        for (int rIndex = lIndex; rIndex <= right; rIndex++) {
+            if (arr[rIndex] <= arr[pivot]) {
+                swap(arr, rIndex, lIndex++);
             }
         }
-        //最后交换基准值到正确的位置
-        swap(arr, pivot, lPointer - 1);
-        //返回基准值的索引
-        return lPointer - 1;
+        //交换基准值到正确的位置
+        swap(arr, pivot, lIndex - 1);
+        return lIndex - 1;
     }
 
+    /**
+     * 测试复习的代码
+     */
+    @Test
+    public void testReview() {
+        int[] arr = {-9, 78, 0, 22, 0, 23, -5, -567, 70}; //待排序数组
+        int[] sort = sortReview(arr, 0, arr.length - 1);
+        System.out.println(Arrays.toString(sort));
+    }
 }

@@ -52,7 +52,7 @@ public class ShellSort {
             for (int i = gap; i < arr.length; i++) {
                 int insertVal = arr[i];   //暂存待插入元素
                 int insertIndex;
-                //**j循环每循环一轮，即将当前元素与本增量序列之前所有的元素（有序表）进行比较，插入到正确的位置
+                //**插入排序：j循环每循环一轮，即将当前元素与本增量序列之前所有的元素（有序表）进行比较（从后往前比较），插入到正确的位置
                 //当insertVal>arr[insertIndex]时，循环结束
                 for (insertIndex = i - gap; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex -= gap) {
                     //如果待插入元素小于增量序列（有序表）当前下标的元素，将该下标的元素后移一位
@@ -60,12 +60,43 @@ public class ShellSort {
                 }
                 //如果insertIndex发生了更新（如果insertVal本身就在正确的位置上则不需要操作）
                 if (insertIndex != i - gap) {
-                    //因为arr[insertIndex]<insertVal，所以insertVal插入的位置应该在后一位
+                    //因为arr[insertIndex]<insertVal，所以insertVal插入的位置应该在insertIndex+gap
                     arr[insertIndex + gap] = insertVal;
                 }
             }
         }
         return arr;
+    }
+
+    /**
+     * 复习
+     * 2020年8月18日11:10:14
+     *
+     * @param arr
+     * @return
+     */
+    private static int[] sortReview(int[] arr) {
+        for (int gap = arr.length / 2; gap > 0; gap /= 2) {
+            //对gap个增量为gap的增量序列进行排序（增量序列的首位不需要排序，所以i从gap开始）
+            for (int i = gap; i < arr.length; i++) {
+                //将arr[i]插入到正确的位置
+                int insertValue = arr[i];
+                int insertIndex;
+                for (insertIndex = i - gap; insertIndex >= 0 && insertValue < arr[insertIndex]; insertIndex -= gap) {
+                    arr[insertIndex + gap] = arr[insertIndex];
+                }
+                //此时insertIndex=-gap或者insetValue>arr[insertIndex]，插入位置为insertIndex+gap
+                arr[insertIndex + gap] = insertValue;
+            }
+        }
+        return arr;
+    }
+
+    @Test
+    public void testReview() {
+        int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0}; //待排序数组
+        int[] sort = sortReview(arr);
+        System.out.println(Arrays.toString(sort));
     }
 }
 

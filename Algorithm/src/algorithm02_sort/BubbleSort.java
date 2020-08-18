@@ -14,7 +14,6 @@ public class BubbleSort {
     public static void main(String[] args) {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
         int[] sort = sort(arr);
-//        int[] sort = sortReview(arr);
         System.out.println(Arrays.toString(sort));
     }
 
@@ -66,32 +65,49 @@ public class BubbleSort {
     }
 
     /**
+     * 交换数组中的两个元素
+     *
+     * @param arr
+     * @param i
+     * @param j
+     */
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    /**
      * 对冒泡排序的复习
      * 2020年8月13日08:54:07
+     * 2020年8月18日15:20:50
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        /*
-        第一次复习
-         */
-        //总共进行arr.length-1轮排序
+        //每次操作确定一个位置的元素（从尾部向头部），共需arr.length-1次
         for (int i = 0; i < arr.length - 1; i++) {
-            boolean flag = true;
-            //每轮进行arr.length-i次相邻元素比较和交换
+            boolean flag = false;
+            //从头向尾进行有条件交换（较大值交换到右侧），交换的次数从arr.length-1次递减到1次
             for (int j = 1; j < arr.length - i; j++) {
                 if (arr[j - 1] > arr[j]) {
-                    int temp = arr[j - 1];
-                    arr[j - 1] = arr[j];
-                    arr[j] = temp;
-                    flag = false;
+                    swap(arr, j - 1, j);
+                    flag = true; //为true说明发生过交换
                 }
             }
-            if (flag) {
+            //如果一轮j循环未发生任何交换，说明该数组已排序完成
+            if (!flag) {
                 return arr;
             }
         }
         return arr;
+    }
+
+    @Test
+    public void testReview() {
+        int[] arr = {3, 9, -1, 20, 10}; //待排序数组
+        int[] sort = sortReview(arr);
+        System.out.println(Arrays.toString(sort));
     }
 }
