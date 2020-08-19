@@ -16,4 +16,9 @@ public class MyTest {
         int length = Integer.toString(223).length();
         System.out.println(length);
     }
+
+    @Test
+    public void test3(){
+
+    }
 }
