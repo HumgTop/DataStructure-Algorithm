@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 希尔排序
  */
-public class ShellSort {
+public class No4_ShellSort {
     public static void main(String[] args) {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0}; //待排序数组
         int[] sort = sort(arr);

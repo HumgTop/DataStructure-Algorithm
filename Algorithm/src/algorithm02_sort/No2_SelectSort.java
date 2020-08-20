@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 选择排序法
  */
-public class SelectSort {
+public class No2_SelectSort {
     public static void main(String[] args) {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
         int[] sort = sort(arr);

@@ -12,7 +12,7 @@ import java.util.Date;
  * 从最低位开始，依次进行一次排序
  * 从最低位排序一直到最高位排序完成以后, 数列就变成一个有序序列
  */
-public class RadixSort {
+public class No7_RadixSort {
     public static void main(String[] args) {
         int[] arr = {53, 3, 542, 748, 14, 214};
         int[] sortedArr = sort(arr);

@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 插入排序
  */
-public class InsertionSort {
+public class No3_InsertionSort {
     public static void main(String[] args) {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
         int[] sort = sort(arr);

@@ -9,7 +9,7 @@ import java.util.List;
  * 二分查找
  * 只能在有序数列中查找！！
  */
-public class BinarySearch {
+public class No2_BinarySearch {
     //声明并初始化变量，否则list==null，使用list.add方法会产生空指针异常
     private static ArrayList<Integer> list = new ArrayList<>(); //存入查找到的元素索引
 

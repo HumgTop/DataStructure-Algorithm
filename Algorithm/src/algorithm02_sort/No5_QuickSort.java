@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 快速排序
  */
-public class QuickSort {
+public class No5_QuickSort {
     public static void main(String[] args) {
         int[] arr = {-9, 78, 0, 22, 0, 23, -5, -567, 70}; //待排序数组
         int[] sort = sort2(arr, 0, arr.length - 1);

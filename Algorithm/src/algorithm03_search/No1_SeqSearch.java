@@ -3,7 +3,7 @@ package algorithm03_search;
 /**
  * 线性查找方法
  */
-public class SeqSearch {
+public class No1_SeqSearch {
     public static void main(String[] args) {
         int[] arr = {1, 9, 11, -1, 34, 89};
         System.out.println(seqSearch(arr, 34));
