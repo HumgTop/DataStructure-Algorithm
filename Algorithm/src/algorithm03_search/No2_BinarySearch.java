@@ -15,7 +15,7 @@ public class No2_BinarySearch {
 
     public static void main(String[] args) {
         int[] array = {1, 8, 10, 89, 1000, 1234};
-        int index = search(array, 0, array.length, 1000);
+        int index = search(array, 0, array.length - 1, 1000);
         System.out.println(index);
     }
 
@@ -54,6 +54,7 @@ public class No2_BinarySearch {
      * @return 所查找元素在数组内的索引
      */
     private static int mySearch(int[] arr, int value, int left, int right) {
+        System.out.println("正在查找");
         int curLeft = left; //当前查找范围的左边界
         int curRight = right;   //当前查找范围的右边界
         int mid = (curLeft + curRight) / 2;
@@ -80,7 +81,7 @@ public class No2_BinarySearch {
     @Test
     public void test1() {
         int[] array = {1, 8, 10, 89, 1000, 1234};
-        int index = mySearch(array, 10, 0, array.length);
+        int index = mySearch(array, 1, 0, array.length - 1);
         System.out.println(index);
     }
 
@@ -121,7 +122,7 @@ public class No2_BinarySearch {
     @Test
     public void test2() {
         int[] array = {1, 8, 10, 89, 1000, 1000, 1000, 1234};
-        mySearch2(array, 1000, 0, array.length);
+        mySearch2(array, 1000, 0, array.length - 1);
         System.out.println(list.toString());
     }
 
@@ -168,7 +169,7 @@ public class No2_BinarySearch {
     @Test
     public void test3() {
         int[] array = {1, 8, 10, 89, 1000, 1000, 1000, 1234};
-        List<Integer> indexList = search2(array, 1000, 0, array.length);
+        List<Integer> indexList = search2(array, 1000, 0, array.length - 1);
         System.out.println(indexList.toString());
     }
 }
