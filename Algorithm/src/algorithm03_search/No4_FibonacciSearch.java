@@ -21,7 +21,7 @@ public class No4_FibonacciSearch {
         int mid = 0;
 
         int[] fib = getFib();
-        //** 找到一个比arr数组长度大的最小的斐波那契数
+        //** 找到一个大于arr数组长度的最小斐波那契数
         while (arr.length > fib[k] - 1) {
             k++;
         }
