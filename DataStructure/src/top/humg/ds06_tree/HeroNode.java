@@ -144,4 +144,49 @@ public class HeroNode {
         //设置递归头 即this.left==null时，二叉树遍历完毕仍未找到节点返回null
         return null;
     }
+
+    /**
+     * 删除节点
+     * 1.叶子节点：直接删除
+     * 2.非叶子节点：删除子树
+     */
+    public boolean del(int no) {
+        //** 本方法无法删除root节点，需要在外部操作
+        //先找到所删除节点的父节点
+        boolean flag;
+        if (this.left != null) {
+            if (this.left.no == no) {
+                this.left = null;
+                return true;
+            } else {
+                //向左递归查找删除
+                try {
+                    //try中的代码一旦发生异常，剩余的代码不再执行
+                    this.left.del(no);  //如果成功删除，flag==true。否则flag=false
+                    flag = true;
+                } catch (Exception e) {
+                    flag = false;
+                }
+                //如果删除成功则返回true
+                if (flag) {
+                    return true;
+                }
+            }
+        }
+
+        //如果左递归没有完成删除
+        if (this.right != null) {
+            if (this.right.no == no) {
+                this.right = null;
+                return true;
+            } else {
+                //右递归删除
+                return this.right.del(no);
+            }
+        }
+
+        //如果递归到最后一个节点仍未完成删除，说明此节点不存在
+        //因为最后找不到节点的话，异常肯定比catch多出一个无法处理
+        throw new RuntimeException("此节点不存在");
+    }
 }

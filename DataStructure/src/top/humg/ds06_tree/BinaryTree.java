@@ -39,4 +39,14 @@ public class BinaryTree {
 
         throw new RuntimeException("未找到该节点");
     }
+
+    //删除
+    public void del(int no) {
+        //如果删除根节点的话
+        if (root.getNo() == no) {
+            setRoot(null);
+        } else {
+            root.del(no);
+        }
+    }
 }
