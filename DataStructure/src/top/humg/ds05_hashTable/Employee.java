@@ -8,17 +8,25 @@ public class Employee {
     public String name;
     public Employee next;
 
-    public Employee(int id,String name){
-        this.id=id;
-        this.name=name;
+    public Employee(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", next=" + next.id +
-                '}';
+        if (next != null) {
+            return "Employee{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", next=" + next.id +
+                    '}';
+        } else {
+            return "Employee{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", next=null" +
+                    '}';
+        }
     }
 }

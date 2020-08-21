@@ -6,9 +6,17 @@ package top.humg.ds05_hashTable;
 public class EmpLinkedList {
     private Employee head;
 
+    public Employee getHead() {
+        return head;
+    }
+
+    public void setHead(Employee head) {
+        this.head = head;
+    }
+
     /*
-    假定添加雇员时，id是自增的
-     */
+            假定添加雇员时，id是自增的
+             */
     public void add(Employee employee) {
         if (head == null) {
             head = employee;
@@ -25,16 +33,21 @@ public class EmpLinkedList {
 
     /**
      * 遍历链表
+     *
+     * @param i
      */
-    public void list() {
+    public void list(int i) {
         if (head == null) {
-            throw new RuntimeException("链表为空");
-        }
-
-        Employee cur = head;
-        while (cur.next != null) {
-            System.out.println(cur);
-            cur = cur.next;
+            System.out.printf("链表[%d]为空%n", i);
+        } else {
+            Employee cur = head;
+            while (true) {
+                System.out.println(cur);
+                if (cur.next == null) {
+                    break;
+                }
+                cur = cur.next;
+            }
         }
     }
 }
