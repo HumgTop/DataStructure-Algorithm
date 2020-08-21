@@ -68,7 +68,7 @@ public class No7_RadixSort {
                         arr[arrIndex++] = bucket[j][k];   //存入元素
                     }
                 }
-                //**完成一个位数的排序后，需要将桶元素计数器归零
+                //** 完成一个位数的排序后（桶元素取出完毕），需要将桶元素计数器归零
                 bucketElementCounter[j] = 0;
             }
         }
@@ -112,46 +112,40 @@ public class No7_RadixSort {
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        //获取数组中最大值的最高位
-        int maxValue = arr[0];
+        //获取arr数组中最大值的位数
+        int max = arr[0];
         for (int value : arr) {
-            if (value > maxValue) {
-                maxValue = value;
+            if (value > max) {
+                max = value;
             }
         }
-        //将maxValue转为字符串获取长度
-        int length = Integer.toString(maxValue).length();
-        //创建桶
+        String maxStr = Integer.toString(max);
+        int maxLength = maxStr.length();
+
+        //创建10个桶，长度等于arr.length
         int[][] bucket = new int[10][arr.length];
-        //创建桶元素计数器
-        int[] bucketElementCounter = new int[10];
+        int[] bucketElementCounter = new int[10];   //桶元素计数器
 
-        //每次循环完成一次桶排序，共循环length次
-        for (int i = 0, n = 1; i < length; i++, n *= 10) {
-            /*
-            先存入桶中，再取回源数组
-             */
-
-            //将数组内所有元素放入桶中
+        //共需要maxLength轮完成排序
+        for (int i = 0, n = 1; i < maxLength; i++, n *= 10) {
+            //循环arr.length次，把所有元素存入桶中
             for (int value : arr) {
-                //获取元素在该位上的值
-                int digitOfElement = value / n % 10;
-                //存入对应的桶中（此处的bucketElementCounter计数器应为0，所以在下处需重置计数器）
-                bucket[digitOfElement][bucketElementCounter[digitOfElement]] = value;
-                bucketElementCounter[digitOfElement]++;
+                int bucketIndex = value / n % 10;    //获取该存入的桶索引（即在个位、十位...上的值）
+                bucket[bucketIndex][bucketElementCounter[bucketIndex]] = value;
+                bucketElementCounter[bucketIndex]++;    //计数器自增
             }
-            //定义源数组指针
+            //按照桶内顺序和桶顺序依次取出元素到arr中
             int arrIndex = 0;
-            //遍历桶数组，取回元素到源数组中
             for (int j = 0; j < 10; j++) {
-                if (bucket[j].length == 0) {
-                    continue;
-                }
+                //每个桶取bucketElementCounter[j]次
                 for (int k = 0; k < bucketElementCounter[j]; k++) {
-                    arr[arrIndex++] = bucket[j][k];
+                    //如果桶内有元素的话
+                    if (bucketElementCounter[j] > 0) {
+                        arr[arrIndex] = bucket[j][k];
+                        arrIndex++;
+                    }
                 }
-                //清空桶计数器
-                bucketElementCounter[j] = 0;
+                bucketElementCounter[j] = 0;  //桶元素取出后，计数器清零
             }
         }
         return arr;
