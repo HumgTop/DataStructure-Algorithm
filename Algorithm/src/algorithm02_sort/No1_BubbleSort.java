@@ -81,23 +81,28 @@ public class No1_BubbleSort {
      * 对冒泡排序的复习
      * 2020年8月13日08:54:07
      * 2020年8月18日15:20:50
+     * 2020年8月21日19:27:44
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        //每次操作确定一个位置的元素（从尾部向头部），共需arr.length-1次
+        /*
+        思路：
+            1.经过arr.length-1轮确定所有元素的正确位置
+            2.每一轮从第一个元素开始向后交换，确定一个位置的元素
+         */
         for (int i = 0; i < arr.length - 1; i++) {
-            boolean flag = false;
-            //从头向尾进行有条件交换（较大值交换到右侧），交换的次数从arr.length-1次递减到1次
-            for (int j = 1; j < arr.length - i; j++) {
-                if (arr[j - 1] > arr[j]) {
-                    swap(arr, j - 1, j);
-                    flag = true; //为true说明发生过交换
+            boolean flag = true;
+            //第二层循环的上限是在递减的
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);    //把较大值交换到右侧
+                    flag = false;
                 }
             }
-            //如果一轮j循环未发生任何交换，说明该数组已排序完成
-            if (!flag) {
+            //如果在一轮中，从未发生过一次交换，说明排序已完成，无需进行之后的操作
+            if (flag) {
                 return arr;
             }
         }
