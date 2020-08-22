@@ -41,12 +41,24 @@ public class BinaryTree {
     }
 
     //删除
+    public void myDel(int no) {
+        if (root != null) {
+            //如果删除根节点的话
+            if (root.getNo() == no) {
+                setRoot(null);
+            } else {
+                root.myDel(no);
+            }
+        }
+    }
+
     public void del(int no) {
-        //如果删除根节点的话
-        if (root.getNo() == no) {
-            setRoot(null);
-        } else {
-            root.del(no);
+        if (root != null) {
+            if (root.getNo() == no) {
+                setRoot(null);
+            } else {
+                root.del(no);
+            }
         }
     }
 }
