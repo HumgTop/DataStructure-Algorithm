@@ -131,7 +131,8 @@ public class No5_QuickSort {
         for (int rPointer = lPointer; rPointer <= right; rPointer++) {
             //如果向右移动过程中，r指针处小于基准值的值与index指针处的值进行交换
             if (arr[rPointer] < arr[pivot]) {
-                /*如果rPointer==lPointer时，arr[rPointer]<arr[pivot]也需要进行交换（需要让lPointer++，否则下次
+                /*
+                如果rPointer==lPointer时，arr[rPointer]<arr[pivot]也需要进行交换（需要让lPointer++，否则下次
                 交换时lPointer指向的小于基准值的元素会被交换到右侧）
                  */
                 swap(arr, rPointer, lPointer);
@@ -162,6 +163,7 @@ public class No5_QuickSort {
      * 复习
      * 2020年8月17日15:33:06
      * 2020年8月18日10:29:10
+     * 2020年8月22日08:56:20
      *
      * @param arr
      * @param left
@@ -169,17 +171,12 @@ public class No5_QuickSort {
      * @return
      */
     private static int[] sortReview(int[] arr, int left, int right) {
-        /*
-        思路：
-            -设定基准值，将比基准值小的元素放在左侧，比基准值大的元素放在右侧
-            -递归执行上步骤，直到所有元素排序完成
-         */
-        //递归头
+        //设置递归头
         if (left < right) {
-            int partitionIndex = partitionReview(arr, left, right); //获取基准值的数组下标
-            //左递归
+            int partitionIndex = partitionReview(arr, left, right);
+            //对基准值左侧递归继续递归排序
             sortReview(arr, left, partitionIndex - 1);
-            //右递归
+            //对基准值右侧继续递归分区
             sortReview(arr, partitionIndex + 1, right);
         }
         return arr;
@@ -189,6 +186,7 @@ public class No5_QuickSort {
      * 复习
      * 2020年8月17日15:22:43
      * 2020年8月18日10:35:28
+     * 2020年8月22日08:35:25
      *
      * @param arr
      * @param left
@@ -196,17 +194,19 @@ public class No5_QuickSort {
      * @return 基准值下标
      */
     private static int partitionReview(int[] arr, int left, int right) {
-        int pivot = left; //设定基准值下标
-        //分区
-        int lIndex = left + 1;
-        for (int rIndex = lIndex; rIndex <= right; rIndex++) {
-            if (arr[rIndex] <= arr[pivot]) {
-                swap(arr, rIndex, lIndex++);
+        int pivot = left; //设定基准值
+        int leftIndex = left + 1;   //左指针
+        for (int rightIndex = leftIndex; rightIndex <= right; rightIndex++) {
+            if (arr[rightIndex] < arr[pivot]) {
+                //把小于基准值的交换到左侧
+                swap(arr, rightIndex, leftIndex);
+                leftIndex++;
             }
         }
-        //交换基准值到正确的位置
-        swap(arr, pivot, lIndex - 1);
-        return lIndex - 1;
+        //把基准值交换到正确的位置
+        swap(arr, pivot, leftIndex - 1);
+        //返回基准值现在的索引
+        return leftIndex - 1;
     }
 
     /**
