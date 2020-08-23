@@ -57,8 +57,8 @@ public class No6_MergeSort {
         int[] left = Arrays.copyOfRange(temp, 0, middle);
         int[] right = Arrays.copyOfRange(temp, middle, temp.length);
         /*
-         * 回溯阶段：一直拆分到temp.length<=1时结束
-         * 递推阶段：返回merge后的数组到上一层
+         * 回溯阶段：一直拆分到temp.length>=2时结束
+         * 递推阶段：返回merge后（按大小重新排序）的合并数组到上一层
          */
         return merge(sort(left), sort(right));
     }
@@ -70,6 +70,9 @@ public class No6_MergeSort {
      * @return 返回合并后的数组
      */
     private static int[] merge(int[] left, int[] right) {
+        /*
+        按照大小顺序依次从2个数组中取出元素到result中（将2个数组合并为一个从小到大排序的有序数组）
+         */
         int[] result = new int[left.length + right.length]; //新建一个result数组保存合并的结果
         int resultIndex = 0;    //result数组的指针
         int leftIndex = 0;
@@ -93,6 +96,78 @@ public class No6_MergeSort {
             }
         }
         return result;
+    }
+
+    /**
+     * 复习
+     * 2020年8月23日09:12:05
+     *
+     * @param arr
+     * @return
+     */
+    public static int[] sortReview(int[] arr) {
+        /*
+        思路：
+            1.先递归拆分直到arr.length<2
+            2.将拆分后的left和right数组按照大小顺序合并到新的result数组
+         */
+        int[] temp = Arrays.copyOf(arr, arr.length);
+        //设置递归头
+        if (temp.length < 2) {
+            return temp;
+        }
+        //设置拆分点
+        int mid = (temp.length / 2);
+        int[] left = Arrays.copyOfRange(temp, 0, mid);
+        int[] right = Arrays.copyOfRange(temp, mid, temp.length);
+
+        //递归调用拆分方法，并对下层拆分进行排序合并且返回
+        return mergeReview(sortReview(left), sortReview(right));
+    }
+
+    /**
+     * 复习
+     *
+     * @param left
+     * @param right
+     * @return
+     */
+    private static int[] mergeReview(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
+
+        //声明数组指针
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int resultIndex = 0;
+
+        //遍历left和right比较元素大小
+        while (leftIndex < left.length && rightIndex < right.length) {
+            if (left[leftIndex] < right[rightIndex]) {
+                result[resultIndex++] = left[leftIndex++];
+            } else {
+                result[resultIndex++] = right[rightIndex++];
+            }
+        }
+        //此时left和right有一个已经遍历完毕，将未遍历完的数组直接拷贝到result中
+        while (resultIndex < result.length) {
+            while (leftIndex < left.length) {
+                result[resultIndex++] = left[leftIndex++];
+            }
+            while (rightIndex < right.length) {
+                result[resultIndex++] = right[rightIndex++];
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 测试复习写的方法
+     */
+    @Test
+    public void testReview() {
+        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2, 222};
+        arr = sortReview(arr);
+        System.out.println(Arrays.toString(arr));
     }
 }
 
