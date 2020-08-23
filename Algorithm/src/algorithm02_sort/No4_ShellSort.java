@@ -47,7 +47,7 @@ public class No4_ShellSort {
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
             /*
             i循环每循环一轮（一轮循环length-gap次），即完成1轮n个增量序列各自的内部排序。
-            每个增量序列有arr.length/gap个元素。需要(arr.length/gap-1)*gap=length-gap次操作才能完成一轮n个增量序列的排序
+            每个增量序列有arr.length/gap个元素。需要(arr.length/gap-1)*gap=length-gap次操作才能完成一轮n个增量序列的排序（前gap个元素在各自的增量序列中都是第一个元素，视为有序表）
              */
             for (int i = gap; i < arr.length; i++) {
                 int insertVal = arr[i];   //暂存待插入元素
@@ -55,7 +55,7 @@ public class No4_ShellSort {
                 //**插入排序：j循环每循环一轮，即将当前元素与本增量序列之前所有的元素（有序表）进行比较（从后往前比较），插入到正确的位置
                 //当insertVal>arr[insertIndex]时，循环结束
                 for (insertIndex = i - gap; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex -= gap) {
-                    //如果待插入元素小于增量序列（有序表）当前下标的元素，将该下标的元素后移一位
+                    //如果待插入元素小于增量序列（有序表）当前下标的元素，将该下标的元素后移gap位
                     arr[insertIndex + gap] = arr[insertIndex];
                 }
                 //如果insertIndex发生了更新（如果insertVal本身就在正确的位置上则不需要操作）
