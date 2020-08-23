@@ -45,9 +45,9 @@ public class No3_InsertionSort {
         for (int i = 1; i < arr.length; i++) {
             int insertVal = arr[i];   //定义待插入值
             int insertIndex;
-            //**将待插入值与有序表元素进行比较（从后往前），如果待插入值较小，则将参加比较的有序表元素后移
+            //** 将待插入值与有序表元素进行比较（从后往前），如果待插入值较小，则将参加比较的有序表元素后移
             //insertIndex>=0条件为了防止数组下标越界
-            //该循环执行到arr[insertIndex]<insertVal时结束
+            //该循环执行到 arr[insertIndex]<insertVal 或者 insertIndex=-1 时结束
             for (insertIndex = i - 1; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex--) {
                 arr[insertIndex + 1] = arr[insertIndex];    //将有序表元素后移
             }
@@ -63,23 +63,22 @@ public class No3_InsertionSort {
     /**
      * 复习
      * 2020年8月18日11:42:12
+     * 2020年8月23日11:06:08
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
         /*
-        将数组分为有序表（左侧）和无序表（右侧），有序表开始只有1个元素
-        遍历无序表，将其元素插入到有序表正确的位置
+        对arr.length-1个元素进行插入排序（将第一个元素视为有序表）
          */
         for (int i = 1; i < arr.length; i++) {
-            //将当前元素arr[i]插入到正确的位置
             int insertVal = arr[i];
             int insertIndex;
+            //每个元素与有序表中所有的元素进行比较，插入到正确的位置
             for (insertIndex = i - 1; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex--) {
-                arr[insertIndex + 1] = arr[insertIndex]; //没有找到正确位置，元素后移一位
+                arr[insertIndex + 1] = arr[insertIndex];
             }
-            //此时insertIndex==-1或者insertVal>arr[insertIndex]，此时插入insertVal
             arr[insertIndex + 1] = insertVal;
         }
         return arr;
