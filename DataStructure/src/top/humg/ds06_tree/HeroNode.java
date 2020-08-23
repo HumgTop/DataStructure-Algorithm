@@ -8,6 +8,9 @@ public class HeroNode {
     private String name;
     private HeroNode left;
     private HeroNode right;
+    //如果为0说明指向正常的子树，如果为1说明指向前驱节点
+    private int leftType = 0;
+    private int rightType = 0;
 
     public HeroNode(int no, String name) {
         this.no = no;
@@ -44,6 +47,22 @@ public class HeroNode {
 
     public void setRight(HeroNode right) {
         this.right = right;
+    }
+
+    public int getLeftType() {
+        return leftType;
+    }
+
+    public void setLeftType(int leftType) {
+        this.leftType = leftType;
+    }
+
+    public int getRightType() {
+        return rightType;
+    }
+
+    public void setRightType(int rightType) {
+        this.rightType = rightType;
     }
 
     @Override
