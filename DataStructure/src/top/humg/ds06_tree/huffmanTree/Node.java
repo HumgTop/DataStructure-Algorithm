@@ -15,23 +15,29 @@ public class Node implements Comparable<Node> {
 
     @Override
     public String toString() {
-        if (left != null) {
+        if (left != null && right == null) {
             return "Node{" +
                     "value=" + value +
                     ", left=" + left.value +
                     ", right=null" +
                     '}';
-        } else if (right != null) {
+        } else if (right != null && left == null) {
             return "Node{" +
                     "value=" + value +
                     ", left=null" +
                     ", right=" + right.value +
                     '}';
+        } else if (left != null) {
+            return "Node{" +
+                    "value=" + value +
+                    ", left=" + left.value +
+                    ", right=" + right.value +
+                    '}';
         } else {
             return "Node{" +
                     "value=" + value +
-                    ", left=" + left +
-                    ", right=" + right +
+                    ", left=null" +
+                    ", right=null" +
                     '}';
         }
     }
@@ -39,5 +45,18 @@ public class Node implements Comparable<Node> {
     @Override
     public int compareTo(Node o) {
         return this.value - o.value;  //表示升序（从小到大）
+    }
+
+    /**
+     * 前序遍历
+     */
+    public void preOrder() {
+        System.out.println(this);
+        if (this.left != null) {
+            this.left.preOrder();
+        }
+        if (this.right != null) {
+            this.right.preOrder();
+        }
     }
 }
