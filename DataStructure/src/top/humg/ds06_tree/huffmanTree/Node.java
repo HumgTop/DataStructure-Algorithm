@@ -8,6 +8,7 @@ public class Node implements Comparable<Node> {
     int value;  //节点权值
     Node left;  //左子节点
     Node right; //右子节点
+    char character; //对应的字符
 
     public Node(int value) {
         this.value = value;
