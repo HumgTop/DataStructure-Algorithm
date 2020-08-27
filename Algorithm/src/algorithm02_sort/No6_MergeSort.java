@@ -101,28 +101,28 @@ public class No6_MergeSort {
     /**
      * 复习
      * 2020年8月23日09:12:05
+     * 2020年8月27日12:38:29
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
         /*
-        思路：
-            1.先递归拆分直到arr.length<2
-            2.将拆分后的left和right数组按照大小顺序合并到新的result数组
+        1.先递归拆分到left和right数组的长度只有1
+        2.再进行合并（合并时进行排序）
          */
-        int[] temp = Arrays.copyOf(arr, arr.length);
-        //设置递归头
-        if (temp.length < 2) {
-            return temp;
+        int mid = arr.length / 2;
+        //递归头
+        if (mid == 0) {
+            return arr;
         }
-        //设置拆分点
-        int mid = (temp.length / 2);
-        int[] left = Arrays.copyOfRange(temp, 0, mid);
-        int[] right = Arrays.copyOfRange(temp, mid, temp.length);
 
-        //递归调用拆分方法，并对下层拆分进行排序合并且返回
-        return mergeReview(sortReview(left), sortReview(right));
+        int[] left = Arrays.copyOfRange(arr, 0, mid);
+        int[] right = Arrays.copyOfRange(arr, mid, arr.length);
+        int[] leftSorted = sortReview(left);
+        int[] rightSorted = sortReview(right);
+
+        return mergeReview(leftSorted, rightSorted);
     }
 
     /**
@@ -133,28 +133,24 @@ public class No6_MergeSort {
      * @return
      */
     private static int[] mergeReview(int[] left, int[] right) {
-        int[] result = new int[left.length + right.length];
-
-        //声明数组指针
-        int leftIndex = 0;
+        int leftIndex;
         int rightIndex = 0;
         int resultIndex = 0;
-
-        //遍历left和right比较元素大小
-        while (leftIndex < left.length && rightIndex < right.length) {
+        int[] result = new int[left.length + right.length];
+        for (leftIndex = 0; leftIndex < left.length && rightIndex < right.length; ) {
             if (left[leftIndex] < right[rightIndex]) {
                 result[resultIndex++] = left[leftIndex++];
             } else {
                 result[resultIndex++] = right[rightIndex++];
             }
         }
-        //此时left和right有一个已经遍历完毕，将未遍历完的数组直接拷贝到result中
-        while (resultIndex < result.length) {
-            while (leftIndex < left.length) {
-                result[resultIndex++] = left[leftIndex++];
+        if (leftIndex < left.length) {
+            for (int i = leftIndex; i < left.length; i++) {
+                result[resultIndex++] = left[i];
             }
-            while (rightIndex < right.length) {
-                result[resultIndex++] = right[rightIndex++];
+        } else {
+            for (int i = rightIndex; i < right.length; i++) {
+                result[resultIndex++] = right[i];
             }
         }
         return result;
