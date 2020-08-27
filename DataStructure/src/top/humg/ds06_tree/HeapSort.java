@@ -114,38 +114,47 @@ public class HeapSort {
     /**
      * 复习
      * 2020年8月24日18:06:33
+     * 2020年8月27日11:43:52
      *
      * @param arr
      * @param cur
-     * @param length
+     * @param length 需要调整的数组的长度
      */
     private static void percDownReview(int[] arr, int cur, int length) {
+        /*
+        将数组arr构造为大顶堆（仍以数组形式存储）
+        -将较大的元素上浮
+         */
         int childIndex;
         int temp;
-
         for (temp = arr[cur]; leftChildIndex(cur) < length; cur = childIndex) {
             childIndex = leftChildIndex(cur);
-            if (childIndex + 1 < length && arr[childIndex + 1] > arr[childIndex]) {
+            if (childIndex + 1 < length && arr[childIndex] < arr[childIndex + 1]) {
                 childIndex++;
             }
-            if (arr[childIndex] > temp) {
-                //上浮
-                arr[cur] = arr[childIndex];
+
+            if (temp < arr[childIndex]) {
+                arr[cur] = arr[childIndex];   //元素上浮
             } else
-                //找到了temp的位置退出循环
                 break;
         }
         arr[cur] = temp;
     }
 
     private static void heapSortReview(int[] arr) {
-        //1.构建大顶堆（从下往上）
+        /*
+        1.将待排序数列构造成一个大顶堆（从下往上）
+        2.将根节点元素与末尾元素进行交换，此时末尾即为最大值
+        3.重新调整堆（因为堆顶元素有了变动），排除交换过的末尾元素（从上往下）
+         */
+        //** 只需要调整非叶节点（0~n/2-1)
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
-            percDownReview(arr, i, arr.length);
+            percDownReview(arr, i, arr.length);   //此时的调整长度为定值
         }
-        //2.交换堆顶元素到末尾（递减）后，再次调整堆（从上往下）
+        //交换堆顶元素到末尾
         for (int i = arr.length - 1; i > 0; i--) {
             swap(arr, 0, i);
+            //重新调整堆结构
             percDownReview(arr, 0, i);
         }
     }
