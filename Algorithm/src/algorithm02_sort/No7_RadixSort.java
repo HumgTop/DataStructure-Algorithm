@@ -108,45 +108,32 @@ public class No7_RadixSort {
      * 复习
      * 2020年8月18日08:38:53
      * 2020年8月21日19:28:06
+     * 2020年8月27日15:33:36
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        //获取arr数组中最大值的位数
-        int max = arr[0];
-        for (int value : arr) {
-            if (value > max) {
-                max = value;
-            }
-        }
-        String maxStr = Integer.toString(max);
-        int maxLength = maxStr.length();
-
-        //创建10个桶，长度等于arr.length
+        int maxDigit = getMaxDigit(arr);    //需要进行maxDigit次桶排序
+        //创建桶
         int[][] bucket = new int[10][arr.length];
-        int[] bucketElementCounter = new int[10];   //桶元素计数器
-
-        //共需要maxLength轮完成排序
-        for (int i = 0, n = 1; i < maxLength; i++, n *= 10) {
-            //循环arr.length次，把所有元素存入桶中
+        //桶计数器
+        int[] bucketElementCtr = new int[10];
+        //共需处理maxDigit轮
+        for (int i = 0, n = 1; i < maxDigit; i++, n *= 10) {
+            //从arr中取出元素，获取对应位上的值，放入不同的桶中
             for (int value : arr) {
-                int bucketIndex = value / n % 10;    //获取该存入的桶索引（即在个位、十位...上的值）
-                bucket[bucketIndex][bucketElementCounter[bucketIndex]] = value;
-                bucketElementCounter[bucketIndex]++;    //计数器自增
+                int index = value / n % 10;
+                //放入桶中
+                bucket[index][bucketElementCtr[index]++] = value;
             }
-            //按照桶内顺序和桶顺序依次取出元素到arr中
+            //从桶中取出元素
             int arrIndex = 0;
             for (int j = 0; j < 10; j++) {
-                //每个桶取bucketElementCounter[j]次
-                for (int k = 0; k < bucketElementCounter[j]; k++) {
-                    //如果桶内有元素的话
-                    if (bucketElementCounter[j] > 0) {
-                        arr[arrIndex] = bucket[j][k];
-                        arrIndex++;
-                    }
+                for (int k = 0; k < bucketElementCtr[j]; k++) {
+                    arr[arrIndex++] = bucket[j][k];
                 }
-                bucketElementCounter[j] = 0;  //桶元素取出后，计数器清零
+                bucketElementCtr[j] = 0;    //取出后将计数器清零
             }
         }
         return arr;
