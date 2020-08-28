@@ -74,6 +74,7 @@ public class No4_FibonacciSearch {
     /**
      * 复习
      * 2020年8月24日07:58:46
+     * 2020年8月28日15:07:56
      *
      * @param arr
      * @param value
@@ -81,32 +82,29 @@ public class No4_FibonacciSearch {
      */
     private static int searchReview(int[] arr, int value) {
         int[] fib = getFibReview();
-        int low = 0;
-        int high = arr.length - 1;
-        //找到一个比arr.length大的最小斐波那契数
+        //找到一个比数组长度大的最小的fib数
         int k = 0;
-        while (fib[k] <= arr.length) {
+        while (fib[k] - 1 < arr.length) {
             k++;
         }
-        //此时fib[index]>arr.length
-        //延伸数组
-        int[] temp = Arrays.copyOf(arr, fib[k] - 1);
-        for (int i = high + 1; i < fib[k] - 1; i++) {
-            temp[i] = arr[high];
-        }
-
+        //此时fib[k]-1>=arr.length
+        //延长数组
+        int[] temp = new int[fib[k] - 1];
+        temp = Arrays.copyOf(arr, fib[k] - 1);
+        int low = 0;
+        int high = arr.length - 1;
         while (low <= high) {
             int mid = low + fib[k - 1] - 1;
             if (value < temp[mid]) {
+                //在左侧查找
                 high = mid - 1;
                 k--;
             } else if (value > temp[mid]) {
                 low = mid + 1;
-                k -= 2;   //右侧的元素数为fib[k-2]-1
+                k -= 2;
             } else
-                return Math.min(mid, high);
+                return Math.min(mid, arr.length - 1);
         }
-
         return -1;
     }
 
