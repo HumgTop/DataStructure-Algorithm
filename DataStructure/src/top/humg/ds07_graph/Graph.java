@@ -280,6 +280,7 @@ public class Graph {
     /**
      * 广度优先搜索
      * 网课demo
+     * 存在一种情况：即有一个F节点，和ABCDE都无路径联系，此时需要单独调用dfs方法去遍历 F
      *
      * @param isVisited
      * @param cur
@@ -338,5 +339,34 @@ public class Graph {
         graph.printEdges();
 
         graph.bfs(graph.isVisited, 0);
+    }
+
+    @Test
+    public void testBfsAndDfs() {
+        Graph graph = new Graph();
+        //初始化矩阵和vertexList
+        int n = 8;
+        graph.edges = new int[n][n];
+        graph.vertexList = new ArrayList<>(n);
+        graph.isVisited = new boolean[n];
+        String[] vertexes = {"1", "2", "3", "4", "5", "6", "7", "8"};
+        graph.vertexList.addAll(Arrays.asList(vertexes));
+
+        //添加路径关系
+        graph.insertEdge(0, 1, 1);
+        graph.insertEdge(0, 2, 1);
+        graph.insertEdge(1, 3, 1);
+        graph.insertEdge(1, 4, 1);
+        graph.insertEdge(2, 5, 1);
+        graph.insertEdge(2, 6, 1);
+        graph.insertEdge(3, 7, 1);
+        graph.insertEdge(4, 7, 1);
+        graph.insertEdge(5, 6, 1);
+
+        graph.printEdges();
+
+//        graph.bfs(graph.isVisited, 0);
+        graph.depthFirstSearch();
+//        graph.myBroadFirstSearch(graph.isVisited, 0, new LinkedList<>());
     }
 }
