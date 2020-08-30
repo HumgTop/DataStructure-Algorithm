@@ -50,9 +50,7 @@ public class No1_BubbleSort {
             for (int j = 1; j < arr.length - i; j++) {
                 if (arr[j - 1] > arr[j]) {
                     //把较大元素交换到后面
-                    int temp = arr[j - 1];
-                    arr[j - 1] = arr[j];
-                    arr[j] = temp;
+                    swap(arr, j - 1, j);
                     flag = false;  //内层每循环一次，只要发生过交换，将flag设置为false，表示排序未完成
                 }
             }
@@ -82,27 +80,25 @@ public class No1_BubbleSort {
      * 2020年8月13日08:54:07
      * 2020年8月18日15:20:50
      * 2020年8月21日19:27:44
+     * 2020年8月30日08:55:52
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
         /*
-        思路：
-            1.经过arr.length-1轮确定所有元素的正确位置
-            2.每一轮从第一个元素开始向后交换，确定一个位置的元素
+        1.将第左向右比较，将较大的值交换到右侧，每次确认一个位置的元素。共需arr.length-1次jiaoh
          */
         for (int i = 0; i < arr.length - 1; i++) {
-            boolean flag = true;
-            //第二层循环的上限是在递减的
+            boolean flag = false;
             for (int j = 0; j < arr.length - 1 - i; j++) {
                 if (arr[j] > arr[j + 1]) {
-                    swap(arr, j, j + 1);    //把较大值交换到右侧
-                    flag = false;
+                    swap(arr, j, j + 1);
+                    flag = true;
                 }
             }
-            //如果在一轮中，从未发生过一次交换，说明排序已完成，无需进行之后的操作
-            if (flag) {
+            //如果一轮j循环没有发生一次交换，说明排序已经完成，直接返回arr
+            if (!flag) {
                 return arr;
             }
         }
