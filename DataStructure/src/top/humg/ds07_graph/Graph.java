@@ -1,23 +1,30 @@
 package top.humg.ds07_graph;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Graph {
-    private ArrayList<String> vertexList;   //存储顶点集合
-    private int[][] edges;  //存储图对应的邻接矩阵
-    private int numOfEdges = 0;   //表示边的数目
-    private boolean[] isVisited;    //标记数组：标记节点的访问状态
+    ArrayList<String> vertexList;   //存储顶点集合
+    int[][] edges;  //存储图对应的邻接矩阵
+    int numOfEdges = 0;   //表示边的数目
+    boolean[] isVisited;    //标记数组：标记节点的访问状态
+
+    public Graph() {
+    }
 
     /**
      * @param n 顶点数
      */
-    public Graph(int n) {
-        //初始化矩阵和vertexList
-        edges = new int[n][n];
-        vertexList = new ArrayList<>(n);
-        isVisited = new boolean[n];
-    }
+//    public Graph(int n) {
+//        //初始化矩阵和vertexList
+//        edges = new int[n][n];
+//        vertexList = new ArrayList<>(n);
+//        isVisited = new boolean[n];
+//    }
 
     /**
      * 插入顶点
@@ -165,6 +172,7 @@ public class Graph {
 
     /**
      * 重载，遍历所有节点进行dfs
+     * 存在一种情况：即有一个F节点，和ABCDE都无路径联系，此时需要这个方法才可遍历到 F
      */
     public void depthFirstSearch() {
         //每一次循环遍历出该节点所有可以到达的节点
@@ -181,9 +189,16 @@ public class Graph {
      * @param args
      */
     public static void main(String[] args) {
-        Graph graph = new Graph(5);
+        Graph graph = new Graph();
+        //初始化矩阵和vertexList
+        int n = 5;
+        graph.edges = new int[n][n];
+        graph.vertexList = new ArrayList<>(n);
+        graph.isVisited = new boolean[n];
+
         String[] vertexes = {"A", "B", "C", "D", "E"};
         graph.vertexList.addAll(Arrays.asList(vertexes));
+        Queue<Integer> queue = new LinkedList<>();
         //添加节点A的路径关系
         graph.insertEdge(0, 1, 1);
         graph.insertEdge(0, 2, 1);
@@ -197,5 +212,131 @@ public class Graph {
 //        graph.depthFirstSearch(graph.isVisited, 0);
 
         graph.depthFirstSearch();
+    }
+
+    /**
+     * 广度优先搜索
+     * 优先进行横向访问节点
+     *
+     * @param queue :存储还未进行向下纵向遍历的节点
+     */
+    public void myBroadFirstSearch(boolean[] isVisited, int cur, Queue<Integer> queue) {
+        if (!isVisited[cur]) {
+            System.out.print(getValByIndex(cur) + "->"); //先访问当前节点
+            isVisited[cur] = true;    //标记为已访问
+        }
+        queue.add(cur); //加入队列中
+
+        Integer head = queue.remove();
+        int neighbor = getNextNeighbor(head);   //获得head的第一个邻接节点
+        //当head层还有邻接节点时，持续遍历
+        while (neighbor != -1) {
+            //且没有被访问过
+            if (!isVisited[neighbor]) {
+                System.out.print(getValByIndex(neighbor) + "->");
+                isVisited[neighbor] = true;
+                queue.add(neighbor);
+            }
+            neighbor = getNextNeighbor(head, neighbor);
+        }
+        //如果队列中还有元素的话
+        if (!queue.isEmpty()) {
+            //本层结束递归进入下一层继续横向遍历
+            Integer next = queue.remove();
+            //*** 相当于对queue中的元素依次调用了一次bfs方法（因为各次递归之间没有依赖（如上层需要下层的返回值），所以可以比较容易改写为while循环
+            myBroadFirstSearch(isVisited, next, queue);
+        }
+    }
+
+    /**
+     * 测试广度优先搜索
+     */
+    @Test
+    public void testMyBFS() {
+        Graph graph = new Graph();
+        //初始化矩阵和vertexList
+        int n = 5;
+        graph.edges = new int[n][n];
+        graph.vertexList = new ArrayList<>(n);
+        graph.isVisited = new boolean[n];
+
+        String[] vertexes = {"A", "B", "C", "D", "E"};
+        graph.vertexList.addAll(Arrays.asList(vertexes));
+        //存储还未进行向下纵向遍历的节点
+        Queue<Integer> queue = new LinkedList<>();
+        //添加节点A的路径关系
+        graph.insertEdge(0, 1, 1);
+        graph.insertEdge(0, 2, 1);
+        //添加B的路径关系（A-B已经添加，不重复添加）
+        graph.insertEdge(1, 2, 1);
+        graph.insertEdge(1, 3, 1);
+        graph.insertEdge(1, 4, 1);
+
+        graph.printEdges();
+
+        graph.myBroadFirstSearch(graph.isVisited, 0, queue);
+    }
+
+    /**
+     * 广度优先搜索
+     * 网课demo
+     *
+     * @param isVisited
+     * @param cur
+     */
+    public void bfs(boolean[] isVisited, int cur) {
+        int head;   //当前遍历head层
+        int neighbor;
+        LinkedList<Integer> queue = new LinkedList<>();
+        System.out.print(getValByIndex(cur) + "->");
+        isVisited[cur] = true;
+        //加入队列
+        queue.addLast(cur);
+        while (!queue.isEmpty()) {
+            //更新head，进行下一轮横向遍历
+            head = queue.removeFirst();
+            //获得head的第一个邻接节点
+            neighbor = getNextNeighbor(head);
+            //如果有邻接点
+            //持续遍历到head层再无邻接点
+            while (neighbor != -1) {
+                //且未访问过
+                if (!isVisited[neighbor]) {
+                    System.out.print(getValByIndex(neighbor) + "->");
+                    isVisited[neighbor] = true;
+                    queue.addLast(neighbor);
+                }
+                //neighbor指向head层的下一个邻接点
+                neighbor = getNextNeighbor(head, neighbor);
+            }
+        }
+    }
+
+    /**
+     * 测试 bfs算法
+     * 网课demo
+     */
+    @Test
+    public void testBFS() {
+        Graph graph = new Graph();
+        //初始化矩阵和vertexList
+        int n = 5;
+        graph.edges = new int[n][n];
+        graph.vertexList = new ArrayList<>(n);
+        graph.isVisited = new boolean[n];
+
+        String[] vertexes = {"A", "B", "C", "D", "E"};
+        graph.vertexList.addAll(Arrays.asList(vertexes));
+        //添加节点A的路径关系
+        graph.insertEdge(0, 1, 1);
+        graph.insertEdge(0, 2, 1);
+        //添加B的路径关系（A-B已经添加，不重复添加）
+        graph.insertEdge(1, 2, 1);
+        graph.insertEdge(1, 3, 1);
+        graph.insertEdge(1, 4, 1);
+
+        graph.printEdges();
+
+        graph.bfs(graph.isVisited, 0);
     }
 }
