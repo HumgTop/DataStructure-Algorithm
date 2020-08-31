@@ -25,11 +25,11 @@ public class HeapSort {
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
             percDown(arr, i, arr.length);
         }
-        //2.将堆顶元素与末尾元素交换（每次确认数组的一个位置：从右往左）
-        for (int j = arr.length - 1; j > 0; j--) {
+        //2.将堆顶元素与末尾元素交换（每次确认数组的一个位置：从右往左，共交换length-1次）
+        for (int j = arr.length - 1; j >= 0; j--) {
             swap(arr, 0, j);
             //此时数组中已经确定了末尾的元素，所以构建堆的长度为arr.length-1
-            //因为只有堆顶元素不合格，所以此时从上往下调整
+            //因为只有堆顶元素不合格，只需下沉堆顶元素找到其正确位置即可（树中的其他节点都满足AVL树的性质）
             percDown(arr, 0, j);
         }
     }
@@ -72,6 +72,7 @@ public class HeapSort {
     private static void percDown(int[] arr, int cur, int length) {
         int childIndex; //声明子节点的下标
         int temp;
+        //** 找到cur节点子树中第一个比自己小的元素，并插入到其父节点的位置（类似插入排序，找到自己正确的位置，保证子节点比自己小，父节点比自己大）
         //循环条件：保证cur节点的左子节点下标不越界
         //每循环一次，cur的指针下移指向它的2个子节点中较大的那个
         for (temp = arr[cur]; leftChildIndex(cur) < length; cur = childIndex) {
@@ -115,46 +116,45 @@ public class HeapSort {
      * 复习
      * 2020年8月24日18:06:33
      * 2020年8月27日11:43:52
+     * 2020年8月31日09:02:19
      *
      * @param arr
      * @param cur
      * @param length 需要调整的数组的长度
      */
     private static void percDownReview(int[] arr, int cur, int length) {
-        /*
-        将数组arr构造为大顶堆（仍以数组形式存储）
-        -将较大的元素上浮
-         */
         int childIndex;
         int temp;
+        //** 找到cur节点子树中第一个比自己小的元素，并插入到其父节点的位置（类似插入排序，找到自己正确的位置，保证子节点比自己小，父节点比自己大）
         for (temp = arr[cur]; leftChildIndex(cur) < length; cur = childIndex) {
             childIndex = leftChildIndex(cur);
             if (childIndex + 1 < length && arr[childIndex] < arr[childIndex + 1]) {
                 childIndex++;
             }
-
-            if (temp < arr[childIndex]) {
-                arr[cur] = arr[childIndex];   //元素上浮
+            if (arr[childIndex] > temp) {
+                //如果子节点的值较大，将其上浮（类似插入排序）
+                arr[cur] = arr[childIndex];
             } else
+                //temp>arr[childIndex]，说明找到了temp的正确位置，退出循环
                 break;
         }
         arr[cur] = temp;
     }
 
     private static void heapSortReview(int[] arr) {
-        /*
-        1.将待排序数列构造成一个大顶堆（从下往上）
-        2.将根节点元素与末尾元素进行交换，此时末尾即为最大值
-        3.重新调整堆（因为堆顶元素有了变动），排除交换过的末尾元素（从上往下）
-         */
-        //** 只需要调整非叶节点（0~n/2-1)
-        for (int i = arr.length / 2 - 1; i >= 0; i--) {
-            percDownReview(arr, i, arr.length);   //此时的调整长度为定值
+       /*
+       1.先将数组调整成大顶堆（从下往上）
+       2.交换堆顶元素到末尾，并重新调整堆使其满足AVL树性质
+        */
+        //从最后一个非叶节点开始调整
+        int length = arr.length;
+        for (int i = length / 2 - 1; i >= 0; i--) {
+            percDownReview(arr, i, length);
         }
-        //交换堆顶元素到末尾
-        for (int i = arr.length - 1; i > 0; i--) {
+        //交换堆顶元素到末尾，共需交换length-1次
+        for (int i = length - 1; i >= 0; i--) {
             swap(arr, 0, i);
-            //重新调整堆结构
+            //调整堆
             percDownReview(arr, 0, i);
         }
     }
