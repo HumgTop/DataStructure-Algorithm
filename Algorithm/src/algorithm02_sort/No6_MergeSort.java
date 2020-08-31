@@ -102,23 +102,20 @@ public class No6_MergeSort {
      * 复习
      * 2020年8月23日09:12:05
      * 2020年8月27日12:38:29
+     * 2020年8月31日08:44:07
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        /*
-        1.先递归拆分到left和right数组的长度只有1
-        2.再进行合并（合并时进行排序）
-         */
-        int mid = arr.length / 2;
-        //递归头
-        if (mid == 0) {
+        //当arr只有1个元素时返回arr
+        if (arr.length == 1) {
             return arr;
         }
-
+        int mid = arr.length / 2;
         int[] left = Arrays.copyOfRange(arr, 0, mid);
         int[] right = Arrays.copyOfRange(arr, mid, arr.length);
+
         int[] leftSorted = sortReview(left);
         int[] rightSorted = sortReview(right);
 
@@ -133,27 +130,28 @@ public class No6_MergeSort {
      * @return
      */
     private static int[] mergeReview(int[] left, int[] right) {
-        int leftIndex;
-        int rightIndex = 0;
-        int resultIndex = 0;
-        int[] result = new int[left.length + right.length];
-        for (leftIndex = 0; leftIndex < left.length && rightIndex < right.length; ) {
-            if (left[leftIndex] < right[rightIndex]) {
-                result[resultIndex++] = left[leftIndex++];
+        int lIndex = 0;
+        int rIndex = 0;
+        int tIndex = 0;
+        int[] temp = new int[left.length + right.length];   //存储left和right中经过排序后的元素
+        while (lIndex < left.length && rIndex < right.length) {
+            if (left[lIndex] < right[rIndex]) {
+                temp[tIndex++] = left[lIndex++];
             } else {
-                result[resultIndex++] = right[rightIndex++];
+                temp[tIndex++] = right[rIndex++];
             }
         }
-        if (leftIndex < left.length) {
-            for (int i = leftIndex; i < left.length; i++) {
-                result[resultIndex++] = left[i];
+        if (lIndex < left.length) {
+            for (int i = lIndex; i < left.length; i++) {
+                temp[tIndex++] = left[i];
             }
         } else {
-            for (int i = rightIndex; i < right.length; i++) {
-                result[resultIndex++] = right[i];
+            for (int i = rIndex; i < right.length; i++) {
+                temp[tIndex++] = right[i];
             }
         }
-        return result;
+        //排序完成返回temp
+        return temp;
     }
 
     /**
