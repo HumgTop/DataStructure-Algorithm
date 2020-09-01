@@ -33,7 +33,7 @@ public class No4_FibonacciSearch {
             k++;
         }
         //** 此时arr.length<=fib[k]-1，length大多数情况小于fib[k]-1
-        int[] temp = Arrays.copyOf(arr, fib[k] - 1);    //延伸数组长度到fib[k]-1，延伸位置元素为0
+        int[] temp = Arrays.copyOf(arr, fib[k] - 1);    //** 延伸数组长度到fib[k]-1，延伸位置元素为0
         //将arr的末尾元素填充到延伸部分
         for (int i = high + 1; i < fib[k] - 1; i++) {
             temp[i] = arr[high];
@@ -75,35 +75,38 @@ public class No4_FibonacciSearch {
      * 复习
      * 2020年8月24日07:58:46
      * 2020年8月28日15:07:56
+     * 2020年9月1日17:16:35
      *
      * @param arr
      * @param value
      * @return
      */
     private static int searchReview(int[] arr, int value) {
-        int[] fib = getFibReview();
-        //找到一个比数组长度大的最小的fib数
+        int[] fibs = getFibReview();
+        int length = arr.length;
+        //找到一个比arr.length大的最小fib数
         int k = 0;
-        while (fib[k] - 1 < arr.length) {
+        while (fibs[k] - 1 < length) {
             k++;
         }
-        //此时fib[k]-1>=arr.length
-        //延长数组
-        int[] temp = new int[fib[k] - 1];
-        temp = Arrays.copyOf(arr, fib[k] - 1);
-        int low = 0;
-        int high = arr.length - 1;
-        while (low <= high) {
-            int mid = low + fib[k - 1] - 1;
+        //此时fib[k]-1>=length
+        int newLength = fibs[k] - 1;
+        //延长数组长度到 newLength
+        int[] temp = Arrays.copyOf(arr, newLength - 1);
+        int left = 0;
+        int right = newLength - 1;
+        int mid;
+        //循环条件
+        while (left <= right) {
+            mid = left + fibs[k - 1] - 1;
             if (value < temp[mid]) {
-                //在左侧查找
-                high = mid - 1;
+                right = mid - 1;
                 k--;
             } else if (value > temp[mid]) {
-                low = mid + 1;
+                left = mid + 1;
                 k -= 2;
             } else
-                return Math.min(mid, arr.length - 1);
+                return Math.min(mid, length - 1);
         }
         return -1;
     }
@@ -130,7 +133,7 @@ public class No4_FibonacciSearch {
     @Test
     public void test1() {
         int[] arr = {1, 8, 10, 89, 1000, 1234, 2000, 2000, 2000, 2000, 2000, 2000, 3000};
-        int index = searchReview(arr, 89);
+        int index = searchReview(arr, 3000);
         System.out.println(index);
     }
 }
