@@ -64,22 +64,24 @@ public class No3_InsertionSort {
      * 复习
      * 2020年8月18日11:42:12
      * 2020年8月23日11:06:08
+     * 2020年9月3日08:29:47
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
         /*
-        对arr.length-1个元素进行插入排序（将第一个元素视为有序表）
+        将第1个元素视为有序表，将第2个元素到第arr.length个元素依次插入到有序表中正确的位置
          */
-        for (int i = 1; i < arr.length; i++) {
-            int insertVal = arr[i];
-            int insertIndex;
-            //每个元素与有序表中所有的元素进行比较，插入到正确的位置
-            for (insertIndex = i - 1; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex--) {
-                arr[insertIndex + 1] = arr[insertIndex];
+        for (int index = 1; index < arr.length; index++) {
+            int temp = arr[index];
+            //将当前元素与有序表中的元素进行比较（从右往左比较）
+            int i;
+            for (i = index - 1; i >= 0 && temp < arr[i]; i--) {
+                arr[i + 1] = arr[i];    //有序表元素后移
             }
-            arr[insertIndex + 1] = insertVal;
+            //此时temp > arr[i] 或者 i=-1（说明temp为最小的元素）
+            arr[i + 1] = temp;
         }
         return arr;
     }
