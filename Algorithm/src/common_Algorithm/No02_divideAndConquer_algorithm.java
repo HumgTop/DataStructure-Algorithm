@@ -10,7 +10,7 @@ import java.util.Stack;
 /**
  * 分治算法
  */
-public class No2_divideAndConquer_algorithm {
+public class No02_divideAndConquer_algorithm {
     public static void main(String[] args) {
         Integer[] arr = {5, 4, 3, 2, 1};
         Stack<Integer> a = new Stack<>();
