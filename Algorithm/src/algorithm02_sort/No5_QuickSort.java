@@ -164,6 +164,7 @@ public class No5_QuickSort {
      * 2020年8月18日10:29:10
      * 2020年8月22日08:56:20
      * 2020年8月26日15:28:21
+     * 2020年9月3日08:41:24
      *
      * @param arr
      * @param left
@@ -171,19 +172,21 @@ public class No5_QuickSort {
      * @return
      */
     private static int[] sortReview(int[] arr, int left, int right) {
-        //当left>=right时，不再继续递归
+        //设置递归条件
         if (left < right) {
             int partitionIndex = partitionReview(arr, left, right);
-            //向左递归分区
+            //左侧进行递归搜索
             sortReview(arr, left, partitionIndex - 1);
-            //向右递归分区
+            //右侧递归搜索
             sortReview(arr, partitionIndex + 1, right);
         }
+        //当left=right时，排序已经结束（在递推阶段已经结束，无需回溯）
         return arr;
     }
 
     /**
      * 复习
+     * 分区方法
      *
      * @param arr
      * @param left
@@ -191,19 +194,19 @@ public class No5_QuickSort {
      * @return 基准值下标
      */
     private static int partitionReview(int[] arr, int left, int right) {
-        int pivot = left;  //确定基准值
-        int leftIndex = left + 1;
-        int rightIndex;
-        //rightIndex从leftIndex开始向右遍历
-        for (rightIndex = leftIndex; rightIndex <= right; rightIndex++) {
-            if (arr[rightIndex] < arr[pivot]) {
-                //较小值交换到左侧
-                swap(arr, leftIndex++, rightIndex);
+        int pivot = left;
+        int lIndex = left + 1;  //arr[left]最后处理，所以lIndex=left+1;
+        int rIndex;
+        //从left到right进行分区操作，将较大值放在右侧，较小值放在左侧
+        for (rIndex = left; rIndex <= right; rIndex++) {
+            if (arr[rIndex] < arr[pivot]) {
+                swap(arr, rIndex, lIndex);
+                lIndex++;
             }
         }
         //将pivot交换到正确的位置
-        swap(arr, leftIndex - 1, pivot);
-        return leftIndex - 1;
+        swap(arr, pivot, lIndex - 1);
+        return lIndex - 1;
     }
 
     /**
