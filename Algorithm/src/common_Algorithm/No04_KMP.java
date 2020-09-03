@@ -50,6 +50,7 @@ public class No04_KMP {
 
     /**
      * 获取目标字符串的部分匹配值
+     * ！效率过低
      *
      * @param dest
      * @return
