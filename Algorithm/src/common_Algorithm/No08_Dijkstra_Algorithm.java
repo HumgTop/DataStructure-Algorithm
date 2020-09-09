@@ -63,7 +63,7 @@ class Dgraph {
     private void update(int index) {
         int len;
         for (int i = 0; i < matrix[index].length; i++) {
-            //更新dis数组，在原有距离的基础上累加
+            //从出发顶点~顶点index~顶点i
             len = visitedVertex.getDis(index) + matrix[index][i];
             //如果顶点i没有被访问过，且提供了更短的路径策略，则更新dis数组
             if (!visitedVertex.in(i) && len < visitedVertex.getDis(i)) {
