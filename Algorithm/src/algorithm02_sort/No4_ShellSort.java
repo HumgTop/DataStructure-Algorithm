@@ -71,22 +71,23 @@ public class No4_ShellSort {
     /**
      * 复习
      * 2020年8月18日11:10:14
+     * 2020年9月9日08:50:48
      *
      * @param arr
      * @return
      */
     private static int[] sortReview(int[] arr) {
+        //当增量gap缩小至0时，排序完成
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
-            //对gap个增量为gap的增量序列进行排序（增量序列的首位不需要排序，所以i从gap开始）
+            //前gap个元素为有序表，无需操作
             for (int i = gap; i < arr.length; i++) {
-                //将arr[i]插入到正确的位置
-                int insertValue = arr[i];
                 int insertIndex;
-                for (insertIndex = i - gap; insertIndex >= 0 && insertValue < arr[insertIndex]; insertIndex -= gap) {
+                int insertVal = arr[i];
+                for (insertIndex = i - gap; insertIndex >= 0 && insertVal < arr[insertIndex]; insertIndex -= gap) {
                     arr[insertIndex + gap] = arr[insertIndex];
                 }
-                //此时insertIndex=-gap或者insetValue>arr[insertIndex]，插入位置为insertIndex+gap
-                arr[insertIndex + gap] = insertValue;
+                //此时insertVal找到了正确的插入位置，insertIndex==-gap或者insertVal>arr[insertIndex]
+                arr[insertIndex + gap] = insertVal;
             }
         }
         return arr;
