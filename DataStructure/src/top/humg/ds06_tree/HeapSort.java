@@ -84,6 +84,7 @@ public class HeapSort {
                 childIndex++;
             }
             //如果子节点的较大值比cur的值大，将cur的值替换为子节点的值
+            //** 这个判断必须写在内部（不能写在for循环判断条件中）因为childIndex的值可能会变化
             if (arr[childIndex] > temp) {
                 //较大值元素上浮（temp暂存的最初的cur节点的值）（类似插入排序，没找到正确的位置时元素后移。）
                 arr[cur] = arr[childIndex];
@@ -117,46 +118,48 @@ public class HeapSort {
      * 2020年8月24日18:06:33
      * 2020年8月27日11:43:52
      * 2020年8月31日09:02:19
+     * 2020年9月12日14:35:33
      *
      * @param arr
      * @param cur
      * @param length 需要调整的数组的长度
      */
     private static void percDownReview(int[] arr, int cur, int length) {
-        int childIndex;
-        int temp;
-        //** 找到cur节点子树中第一个比自己小的元素，并插入到其父节点的位置（类似插入排序，找到自己正确的位置，保证子节点比自己小，父节点比自己大）
-        for (temp = arr[cur]; leftChildIndex(cur) < length; cur = childIndex) {
-            childIndex = leftChildIndex(cur);
-            if (childIndex + 1 < length && arr[childIndex] < arr[childIndex + 1]) {
+        //将当前节点下沉到正确的位置
+        int childIndex = leftChildIndex(cur);
+        int temp = arr[cur];
+        while (childIndex < length) {
+            if (childIndex + 1 < length && arr[childIndex + 1] > arr[childIndex]) {
                 childIndex++;
             }
-            if (arr[childIndex] > temp) {
-                //如果子节点的值较大，将其上浮（类似插入排序）
-                arr[cur] = arr[childIndex];
+            if (temp < arr[childIndex]) {
+                arr[cur] = arr[childIndex];   //子节点上浮
             } else
-                //temp>arr[childIndex]，说明找到了temp的正确位置，退出循环
                 break;
+            cur = childIndex;
+            childIndex = leftChildIndex(cur);
         }
+        /*
+        此时
+        1.childIndex>arr.length
+        2.temp>arr[childIndex]
+        temp已经找到需要插入的位置
+         */
         arr[cur] = temp;
     }
 
     private static void heapSortReview(int[] arr) {
-       /*
-       1.先将数组调整成大顶堆（从下往上）
-       2.交换堆顶元素到末尾，并重新调整堆使其满足AVL树性质
-        */
-        //从最后一个非叶节点开始调整
-        int length = arr.length;
-        for (int i = length / 2 - 1; i >= 0; i--) {
-            percDownReview(arr, i, length);
+        //初始化大顶堆，从非叶节点，从下往上调整
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            percDownReview(arr, i, arr.length);
         }
-        //交换堆顶元素到末尾，共需交换length-1次
-        for (int i = length - 1; i >= 0; i--) {
+        for (int i = arr.length - 1; i > 0; i--) {
+            //交换最大的堆顶元素到末尾
             swap(arr, 0, i);
-            //调整堆
             percDownReview(arr, 0, i);
         }
+
+
     }
 
     @Test
