@@ -2,9 +2,11 @@ package common_Algorithm;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 马踏棋盘算法（骑士周游问题）
+ * 只能求出一种解法
  */
 public class No10_HorseChessBoard {
     private static int X;   //棋盘的列数
@@ -13,10 +15,10 @@ public class No10_HorseChessBoard {
     private static boolean finished = false;    //如果为true，表示棋盘上所有位置均已被访问
 
     public static void main(String[] args) {
-        X = 6;
-        Y = 6;
-        int row = 2;
-        int column = 4;
+        X = 8;
+        Y = 8;
+        int row = 1;
+        int column = 1;
         int[][] chessBoard = new int[X][Y];
         visited = new boolean[X * Y];
 
@@ -42,11 +44,15 @@ public class No10_HorseChessBoard {
      * @param step       当前走到第几步
      */
     public static void traverSalChessboard(int[][] chessBoard, int row, int column, int step) {
+        if (step == 64) {
+            System.out.println("找出一个解");
+        }
         chessBoard[row][column] = step; //将步数写在棋盘上
         visited[row * X + column] = true;   //假定此点可以走通，先标记为已经被访问
         Point curPoint = new Point(column, row);
         //获取下一步能走的位置
         ArrayList<Point> next = next(curPoint);
+        sort(next);
         while (!next.isEmpty()) {
             Point nextPossible = next.remove(0);
             int visitedIndex = nextPossible.y * X + nextPossible.x;
@@ -63,7 +69,6 @@ public class No10_HorseChessBoard {
             visited[row * X + column] = false;
         } else
             finished = true;
-
     }
 
     /**
@@ -100,6 +105,19 @@ public class No10_HorseChessBoard {
         if ((point.x = curPoint.x + 2) < X && (point.y = curPoint.y + 1) < Y) {
             points.add(new Point(point));
         }
+        //对集合中point进行排序（每个point的next集合大小进行升序排列）
         return points;
+    }
+
+    /**
+     * 对points集合排序（贪心优化）
+     * 每一步选择最优策略（尽可能少回溯）
+     *
+     * @param points
+     */
+    public static void sort(List<Point> points) {
+        points.sort((o1, o2) ->
+                //按next集合大小升序排列
+                next(o1).size() - next(o2).size());
     }
 }
