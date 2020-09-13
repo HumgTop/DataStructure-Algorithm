@@ -172,15 +172,12 @@ public class No5_QuickSort {
      * @return
      */
     private static int[] sortReview(int[] arr, int left, int right) {
-        //设置递归条件
         if (left < right) {
-            int partitionIndex = partitionReview(arr, left, right);
-            //左侧进行递归搜索
+            int partitionIndex = partitionReview(arr, left, right); //完成一次分区
+            //继续向下递归分区
             sortReview(arr, left, partitionIndex - 1);
-            //右侧递归搜索
             sortReview(arr, partitionIndex + 1, right);
         }
-        //当left=right时，排序已经结束（在递推阶段已经结束，无需回溯）
         return arr;
     }
 
@@ -195,16 +192,13 @@ public class No5_QuickSort {
      */
     private static int partitionReview(int[] arr, int left, int right) {
         int pivot = left;
-        int lIndex = left + 1;  //arr[left]最后处理，所以lIndex=left+1;
+        int lIndex = left + 1;
         int rIndex;
-        //从left到right进行分区操作，将较大值放在右侧，较小值放在左侧
-        for (rIndex = left; rIndex <= right; rIndex++) {
+        for (rIndex = lIndex; rIndex <= right; rIndex++) {
             if (arr[rIndex] < arr[pivot]) {
-                swap(arr, rIndex, lIndex);
-                lIndex++;
+                swap(arr, lIndex++, rIndex);
             }
         }
-        //将pivot交换到正确的位置
         swap(arr, pivot, lIndex - 1);
         return lIndex - 1;
     }
