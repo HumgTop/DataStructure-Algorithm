@@ -47,7 +47,7 @@ public class No6_MergeSort {
      */
     public static int[] sort(int[] arr) {
         int[] temp = Arrays.copyOf(arr, arr.length); //拷贝源数组
-        //设置递归头
+        //设置递归头，递归到left和right数组仅有一个元素时结束
         if (temp.length < 2) {
             return temp;
         }
@@ -85,15 +85,11 @@ public class No6_MergeSort {
                 result[resultIndex++] = right[rightIndex++];
         }
         //如果其中一个数组已经排序完，指针指向length。则将另外一个非空数组的剩下的元素拷贝到result中
-        if (rightIndex >= right.length) {
-            for (int i = leftIndex; i < left.length; i++) {
-                result[resultIndex++] = left[i];
-            }
+        while (leftIndex < left.length) {
+            result[resultIndex++] = left[leftIndex++];
         }
-        if (leftIndex >= left.length) {
-            for (int i = rightIndex; i < right.length; i++) {
-                result[resultIndex++] = right[i];
-            }
+        while (rightIndex < right.length) {
+            result[resultIndex++] = right[rightIndex++];
         }
         return result;
     }
@@ -103,23 +99,25 @@ public class No6_MergeSort {
      * 2020年8月23日09:12:05
      * 2020年8月27日12:38:29
      * 2020年8月31日08:44:07
+     * 2020年9月13日09:45:55
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        //当arr只有1个元素时返回arr
-        if (arr.length == 1) {
+        int mid = arr.length / 2;
+        //递归头，递归到left和right数组仅有一个元素时结束
+        if (mid == 0) {
             return arr;
         }
-        int mid = arr.length / 2;
         int[] left = Arrays.copyOfRange(arr, 0, mid);
         int[] right = Arrays.copyOfRange(arr, mid, arr.length);
 
-        int[] leftSorted = sortReview(left);
-        int[] rightSorted = sortReview(right);
+        //向下递归
+        int[] sortedLeft = sortReview(left);
+        int[] sortedRight = sortReview(right);
 
-        return mergeReview(leftSorted, rightSorted);
+        return mergeReview(sortedLeft, sortedRight);
     }
 
     /**
@@ -130,28 +128,25 @@ public class No6_MergeSort {
      * @return
      */
     private static int[] mergeReview(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
         int lIndex = 0;
         int rIndex = 0;
-        int tIndex = 0;
-        int[] temp = new int[left.length + right.length];   //存储left和right中经过排序后的元素
+        int index = 0;  //result数组的索引
+
         while (lIndex < left.length && rIndex < right.length) {
             if (left[lIndex] < right[rIndex]) {
-                temp[tIndex++] = left[lIndex++];
-            } else {
-                temp[tIndex++] = right[rIndex++];
-            }
+                result[index++] = left[lIndex++];
+            } else
+                result[index++] = right[rIndex++];
         }
-        if (lIndex < left.length) {
-            for (int i = lIndex; i < left.length; i++) {
-                temp[tIndex++] = left[i];
-            }
-        } else {
-            for (int i = rIndex; i < right.length; i++) {
-                temp[tIndex++] = right[i];
-            }
+        while (lIndex < left.length) {
+            result[index++] = left[lIndex++];
         }
-        //排序完成返回temp
-        return temp;
+        while (rIndex < right.length) {
+            result[index++] = right[rIndex++];
+        }
+
+        return result;
     }
 
     /**
