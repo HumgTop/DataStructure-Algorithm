@@ -63,25 +63,23 @@ public class No2_SelectSort {
      * 复习
      * 2020年8月18日15:08:15
      * 2020年8月23日11:16:07
+     * 2020年9月13日10:44:53
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        /*
-        经过arr.length-1轮排序，每轮确定一个位置的元素（从左往右）
-        每轮在后n-i个元素中找到最小值，放到下标为i+1的位置
-         */
+        //一层循环arr.length-1次，二层循环上限递减：从arr.length-1减到1
         for (int i = 0; i < arr.length - 1; i++) {
+            int temp = arr[i];
             int minIndex = i;
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[minIndex]) {
-                    minIndex = j;
+                if (arr[j] < temp) {
+                    temp = arr[j];
+                    minIndex = j; //记录下标
                 }
             }
-            if (minIndex != i) {
-                swap(arr, i, minIndex);
-            }
+            swap(arr, minIndex, i);
         }
         return arr;
     }
@@ -99,6 +97,9 @@ public class No2_SelectSort {
         arr[j] = temp;
     }
 
+    /**
+     * 测试复习方法
+     */
     @Test
     public void testReview() {
         int[] arr = {3, 9, -1, 10, 20}; //待排序数组
