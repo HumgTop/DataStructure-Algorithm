@@ -114,26 +114,27 @@ public class No7_RadixSort {
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        int maxDigit = getMaxDigit(arr);    //需要进行maxDigit次桶排序
+        int maxDigit = getMaxDigit(arr);
         //创建桶
         int[][] bucket = new int[10][arr.length];
-        //桶计数器
-        int[] bucketElementCtr = new int[10];
-        //共需处理maxDigit轮
+        //桶元素计数器
+        int[] bucketElementCount = new int[10];
+
         for (int i = 0, n = 1; i < maxDigit; i++, n *= 10) {
-            //从arr中取出元素，获取对应位上的值，放入不同的桶中
+            int index;
+            //将arr中所有元素存入对应的桶中
             for (int value : arr) {
-                int index = value / n % 10;
-                //放入桶中
-                bucket[index][bucketElementCtr[index]++] = value;
+                index = value / n % 10;
+                bucket[index][bucketElementCount[index]++] = value;
             }
-            //从桶中取出元素
+            //依次从桶中取出元素到arr中
             int arrIndex = 0;
             for (int j = 0; j < 10; j++) {
-                for (int k = 0; k < bucketElementCtr[j]; k++) {
+                for (int k = 0; k < bucketElementCount[j]; k++) {
                     arr[arrIndex++] = bucket[j][k];
                 }
-                bucketElementCtr[j] = 0;    //取出后将计数器清零
+                //桶计数器清零
+                bucketElementCount[j] = 0;
             }
         }
         return arr;
