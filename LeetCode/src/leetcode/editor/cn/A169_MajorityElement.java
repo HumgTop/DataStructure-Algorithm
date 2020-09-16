@@ -19,7 +19,7 @@ package leetcode.editor.cn;
 // Related Topics 位运算 数组 分治算法 
 // 👍 734 👎 0
 
-public class No169_MajorityElement {
+public class A169_MajorityElement {
     public void main(String[] args) {
         Solution solution = new Solution();
 

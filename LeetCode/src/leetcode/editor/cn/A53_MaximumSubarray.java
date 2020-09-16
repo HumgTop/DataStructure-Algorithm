@@ -15,11 +15,9 @@ package leetcode.editor.cn;
 // Related Topics 数组 分治算法 动态规划 
 // 👍 2422 👎 0
 
-import java.math.BigInteger;
-
-public class No53_MaximumSubarray {
+public class A53_MaximumSubarray {
     public static void main(String[] args) {
-        Solution solution = new No53_MaximumSubarray().new Solution();
+        Solution solution = new A53_MaximumSubarray().new Solution();
 
     }
 

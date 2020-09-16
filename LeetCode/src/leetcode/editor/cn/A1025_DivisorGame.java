@@ -42,9 +42,9 @@ package leetcode.editor.cn;
 // Related Topics 数学 动态规划 
 // 👍 231 👎 0
 
-public class No1025_DivisorGame {
+public class A1025_DivisorGame {
     public static void main(String[] args) {
-        Solution solution = new No1025_DivisorGame().new Solution();
+        Solution solution = new A1025_DivisorGame().new Solution();
 
     }
 

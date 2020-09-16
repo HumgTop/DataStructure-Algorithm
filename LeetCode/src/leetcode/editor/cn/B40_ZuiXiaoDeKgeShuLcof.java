@@ -28,9 +28,9 @@ package leetcode.editor.cn;
 
 import java.util.Arrays;
 
-class No40_ZuiXiaoDeKgeShuLcof {
+public class B40_ZuiXiaoDeKgeShuLcof {
     public static void main(String[] args) {
-        Solution solution = new No40_ZuiXiaoDeKgeShuLcof().new Solution();
+        Solution solution = new B40_ZuiXiaoDeKgeShuLcof().new Solution();
         int[] arr = {3, 2, 1, 0, 0};
         int k = 3;
         int[] leastNumbers = solution.getLeastNumbers(arr, k);
