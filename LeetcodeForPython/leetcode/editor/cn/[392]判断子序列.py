@@ -1,6 +1,7 @@
 from typing import *
 
-# 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。 
+
+# 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
 # 
 #  你可以认为 s 和 t 中仅包含英文小写字母。字符串 t 可能会很长（长度 ~= 500,000），而 s 是个短字符串（长度 <=100）。 
 # 
@@ -32,10 +33,16 @@ from typing import *
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
+        s_index = t_index = 0
+        while s_index < len(s) and t_index < len(t):
+            if s[s_index] == t[t_index]: s_index += 1
+            t_index += 1
+
+        return s_index == len(s)
+
+
 # leetcode submit region end(Prohibit modification and deletion)
 
 
-
 if __name__ == '__main__':
-
     pass
