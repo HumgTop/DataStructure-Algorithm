@@ -119,47 +119,38 @@ public class HeapSort {
      * 2020年8月27日11:43:52
      * 2020年8月31日09:02:19
      * 2020年9月12日14:35:33
+     * 2020年9月19日12:02:13
      *
      * @param arr
      * @param cur
      * @param length 需要调整的数组的长度
      */
     private static void percDownReview(int[] arr, int cur, int length) {
-        //将当前节点下沉到正确的位置
-        int childIndex = leftChildIndex(cur);
+        int childIndex;
         int temp = arr[cur];
-        while (childIndex < length) {
+        for (; leftChildIndex(cur) < length; cur = childIndex) {
+            childIndex = leftChildIndex(cur);
             if (childIndex + 1 < length && arr[childIndex + 1] > arr[childIndex]) {
                 childIndex++;
             }
             if (temp < arr[childIndex]) {
-                arr[cur] = arr[childIndex];   //子节点上浮
-            } else
-                break;
-            cur = childIndex;
-            childIndex = leftChildIndex(cur);
+                arr[cur] = arr[childIndex];
+            } else break;
         }
-        /*
-        此时
-        1.childIndex>arr.length
-        2.temp>arr[childIndex]
-        temp已经找到需要插入的位置
-         */
+        //此时temp>=arr[childIndex]或者leftChildIndex[cur]>=length
         arr[cur] = temp;
     }
 
     private static void heapSortReview(int[] arr) {
-        //初始化大顶堆，从非叶节点，从下往上调整
+        //将arr调整为大顶堆（自下往上调整非叶节点）
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
             percDownReview(arr, i, arr.length);
         }
+        //将堆顶元素与堆尾元素进行交换，再次调整堆使其满足AVL树性质
         for (int i = arr.length - 1; i > 0; i--) {
-            //交换最大的堆顶元素到末尾
             swap(arr, 0, i);
             percDownReview(arr, 0, i);
         }
-
-
     }
 
     @Test
