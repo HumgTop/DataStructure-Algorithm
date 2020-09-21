@@ -86,21 +86,16 @@ public class No1_BubbleSort {
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        /*
-        1.将第左向右比较，将较大的值交换到右侧，每次确认一个位置的元素。共需arr.length-1次jiaoh
-         */
-        for (int i = 0; i < arr.length - 1; i++) {
+        for (int i = 0; i < arr.length; i++) {
             boolean flag = false;
-            for (int j = 0; j < arr.length - 1 - i; j++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
                     swap(arr, j, j + 1);
                     flag = true;
                 }
             }
-            //如果一轮j循环没有发生一次交换，说明排序已经完成，直接返回arr
-            if (!flag) {
-                return arr;
-            }
+            //如果有一轮j循环没有发生交换说明排序已经结束
+            if (!flag) return arr;
         }
         return arr;
     }
