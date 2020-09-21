@@ -73,6 +73,7 @@ public class No05_Greedy_Algorithm {
         ArrayList<String> temp = new ArrayList<>();
 
         while (uncoverAreas.size() > 0) {
+            //遍历所有电台{
             for (String key : map.keySet()) {
                 temp.clear();
                 HashSet<String> cover = map.get(key);   //当前电台的可覆盖区域
