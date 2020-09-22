@@ -100,24 +100,21 @@ public class No6_MergeSort {
      * 2020年8月27日12:38:29
      * 2020年8月31日08:44:07
      * 2020年9月13日09:45:55
+     * 2020年9月22日08:56:27
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
         int mid = arr.length / 2;
-        //递归头，递归到left和right数组仅有一个元素时结束
-        if (mid == 0) {
+        if (mid < 1) {
             return arr;
         }
+
         int[] left = Arrays.copyOfRange(arr, 0, mid);
         int[] right = Arrays.copyOfRange(arr, mid, arr.length);
 
-        //向下递归
-        int[] sortedLeft = sortReview(left);
-        int[] sortedRight = sortReview(right);
-
-        return mergeReview(sortedLeft, sortedRight);
+        return mergeReview(sortReview(left), sortReview(right));
     }
 
     /**
@@ -129,21 +126,22 @@ public class No6_MergeSort {
      */
     private static int[] mergeReview(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
+        int resIndex = 0;
         int lIndex = 0;
         int rIndex = 0;
-        int index = 0;  //result数组的索引
 
         while (lIndex < left.length && rIndex < right.length) {
             if (left[lIndex] < right[rIndex]) {
-                result[index++] = left[lIndex++];
-            } else
-                result[index++] = right[rIndex++];
+                result[resIndex++] = left[lIndex++];
+            } else {
+                result[resIndex++] = right[rIndex++];
+            }
         }
         while (lIndex < left.length) {
-            result[index++] = left[lIndex++];
+            result[resIndex++] = left[lIndex++];
         }
         while (rIndex < right.length) {
-            result[index++] = right[rIndex++];
+            result[resIndex++] = right[rIndex++];
         }
 
         return result;
