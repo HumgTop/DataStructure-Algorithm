@@ -25,10 +25,11 @@ package leetcode.editor.cn;
 // Related Topics 数组 动态规划 
 // 👍 1193 👎 0
 
+import java.util.Map;
+
 public class BestTimeToBuyAndSellStock {
     public static void main(String[] args) {
         Solution solution = new BestTimeToBuyAndSellStock().new Solution();
-
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
