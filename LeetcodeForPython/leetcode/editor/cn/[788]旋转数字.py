@@ -33,26 +33,38 @@ from typing import *
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def rotatedDigits(self, N: int) -> int:
+        # 官方解：暴力解
+        res = 0
         mirror = {'2', '5', '6', '9'}
         invalid = {'3', '4', '7'}
-        res = 0
-        for i in range(1, N + 1):
-            iStr = str(i)
-            mirrorFlag = False  # 默认没有出现镜像数
-            for ch in iStr:
-                # 出现旋转无效数字，结束循环
-                if ch in invalid:
-                    break
-                if ch in mirror: mirrorFlag = True
-            else:
-                if mirrorFlag: res += 1
+        for num in range(1, N + 1):
+            numStr = str(num)
+            res += (all((x not in invalid for x in numStr))
+                    and any((x in mirror for x in numStr)))
 
         return res
+
+        # 自解：
+        # mirror = {'2', '5', '6', '9'}
+        # invalid = {'3', '4', '7'}
+        # res = 0
+        # for i in range(1, N + 1):
+        #     iStr = str(i)
+        #     mirrorFlag = False  # 默认没有出现镜像数
+        #     for ch in iStr:
+        #         # 出现旋转无效数字，结束循环
+        #         if ch in invalid:
+        #             break
+        #         if ch in mirror: mirrorFlag = True
+        #     else:
+        #         if mirrorFlag: res += 1
+        #
+        # return res
 
 
 # leetcode submit region end(Prohibit modification and deletion)
 
 
 if __name__ == '__main__':
-    print(Solution().rotatedDigits(2))
+    print(1 + True)
     pass
