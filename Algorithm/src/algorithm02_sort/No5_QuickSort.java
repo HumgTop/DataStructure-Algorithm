@@ -172,12 +172,12 @@ public class No5_QuickSort {
      * @return
      */
     private static int[] sortReview(int[] arr, int left, int right) {
-        if (left < right) {
-            int partitionIndex = partitionReview(arr, left, right); //完成一次分区
-            //继续向下递归分区
-            sortReview(arr, left, partitionIndex - 1);
-            sortReview(arr, partitionIndex + 1, right);
-        }
+        if (left >= right) return arr;
+        int partitionIndex = partitionReview(arr, left, right);
+        //左侧递归进行分区
+        sortReview(arr, left, partitionIndex - 1);
+        sortReview(arr, partitionIndex + 1, right);
+
         return arr;
     }
 
@@ -192,13 +192,13 @@ public class No5_QuickSort {
      */
     private static int partitionReview(int[] arr, int left, int right) {
         int pivot = left;
-        int lIndex = left + 1;
+        int lIndex = pivot + 1;
         int rIndex;
         for (rIndex = lIndex; rIndex <= right; rIndex++) {
-            if (arr[rIndex] < arr[pivot]) {
-                swap(arr, lIndex++, rIndex);
-            }
+            //如果右侧有小于基准值的元素，将其交换到左侧
+            if (arr[rIndex] < arr[pivot]) swap(arr, rIndex, lIndex++);
         }
+        //将基准值交换到正确的位置
         swap(arr, pivot, lIndex - 1);
         return lIndex - 1;
     }

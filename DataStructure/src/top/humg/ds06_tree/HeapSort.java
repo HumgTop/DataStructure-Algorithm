@@ -75,6 +75,7 @@ public class HeapSort {
         //** 找到cur节点子树中第一个比自己小的元素，并插入到其父节点的位置（类似插入排序，找到自己正确的位置，保证子节点比自己小，父节点比自己大）
         //循环条件：保证cur节点的左子节点下标不越界
         //每循环一次，cur的指针下移指向它的2个子节点中较大的那个
+        //** 此处注意不是arr.length
         for (temp = arr[cur]; leftChildIndex(cur) < length; cur = childIndex) {
             //拿到cur节点的左子节点下标
             childIndex = leftChildIndex(cur);
@@ -120,6 +121,7 @@ public class HeapSort {
      * 2020年8月31日09:02:19
      * 2020年9月12日14:35:33
      * 2020年9月19日12:02:13
+     * 2020年10月5日10:21:49
      *
      * @param arr
      * @param cur
@@ -127,26 +129,25 @@ public class HeapSort {
      */
     private static void percDownReview(int[] arr, int cur, int length) {
         int childIndex;
-        int temp = arr[cur];
-        for (; leftChildIndex(cur) < length; cur = childIndex) {
+        int temp;   //暂存cur节点的值
+        for (temp = arr[cur]; leftChildIndex(cur) < length; cur = childIndex) {
             childIndex = leftChildIndex(cur);
+            //取到较大的那个子节点
             if (childIndex + 1 < length && arr[childIndex + 1] > arr[childIndex]) {
                 childIndex++;
             }
-            if (temp < arr[childIndex]) {
-                arr[cur] = arr[childIndex];
-            } else break;
+            if (arr[childIndex] > temp) arr[cur] = arr[childIndex];
+            else break;
         }
-        //此时temp>=arr[childIndex]或者leftChildIndex[cur]>=length
         arr[cur] = temp;
     }
 
     private static void heapSortReview(int[] arr) {
-        //将arr调整为大顶堆（自下往上调整非叶节点）
+        //将arr调整为大顶堆，从下往上（非叶节点）调整
         for (int i = arr.length / 2 - 1; i >= 0; i--) {
             percDownReview(arr, i, arr.length);
         }
-        //将堆顶元素与堆尾元素进行交换，再次调整堆使其满足AVL树性质
+        //交换堆顶和堆尾的元素，再次调整堆，使其满足大顶堆性质
         for (int i = arr.length - 1; i > 0; i--) {
             swap(arr, 0, i);
             percDownReview(arr, 0, i);

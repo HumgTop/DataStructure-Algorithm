@@ -64,22 +64,22 @@ public class No2_SelectSort {
      * 2020年8月18日15:08:15
      * 2020年8月23日11:16:07
      * 2020年9月13日10:44:53
+     * 2020年10月5日14:30:52
      *
      * @param arr
      * @return
      */
     public static int[] sortReview(int[] arr) {
-        //一层循环arr.length-1次，二层循环上限递减：从arr.length-1减到1
+        //共需操作arr.length-1次
         for (int i = 0; i < arr.length - 1; i++) {
-            int temp = arr[i];
-            int minIndex = i;
+            int min = i;
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < temp) {
-                    temp = arr[j];
-                    minIndex = j; //记录下标
+                if (arr[j] < arr[min]) {
+                    min = j;    //更新最小值的下标
                 }
             }
-            swap(arr, minIndex, i);
+            //将此轮最小值交换到正确的位置
+            swap(arr, min, i);
         }
         return arr;
     }
