@@ -2,3 +2,5 @@
 *.iml
 target
 out
+/LeetcodeForPython/leetcode/editor/cn/all.json
+/LeetcodeForPython/leetcode/editor/cn/translation.json
