@@ -35,13 +35,13 @@ class Solution:
         # 递归法
         res = []
 
-        def rescur(node: TreeNode):
+        def recur(node: TreeNode):
             if not node: return
-            rescur(node.left)
-            rescur(node.right)
+            recur(node.left)
+            recur(node.right)
             res.append(node.val)
 
-        rescur(root)
+        recur(root)
         return res
 
 

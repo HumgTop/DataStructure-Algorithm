@@ -37,16 +37,16 @@ class Solution:
         # 递归法
         res = []
 
-        def rescur(node: Node):
+        def recur(node: Node):
             # 递归头
             if not node: return
             for child in node.children:
-                rescur(child)
+                recur(child)
 
             # 从下层返回后，本层的执行代码
             res.append(node.val)
 
-        rescur(root)
+        recur(root)
         return res
 
 

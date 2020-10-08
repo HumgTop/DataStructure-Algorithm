@@ -62,17 +62,17 @@ class TreeNode:
 class Solution:
     def increasingBST(self, root: TreeNode) -> TreeNode:
         # 中序遍历
-        def rescur(node: TreeNode):
+        def recur(node: TreeNode):
             if not node: return  # 如果node为空，直接返回
-            rescur(node.left)
+            recur(node.left)
             node.left = None
             self.cur.right = node
             self.cur = node  # cur指针移动到右子节点
-            rescur(node.right)
+            recur(node.right)
 
         # 声明一个实例属性
         res = self.cur = TreeNode(0)
-        rescur(root)
+        recur(root)
         return res.right
 
 
