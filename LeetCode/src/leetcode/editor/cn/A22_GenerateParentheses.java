@@ -25,39 +25,38 @@ import java.util.List;
 
 public class A22_GenerateParentheses {
     public static void main(String[] args) {
-        Solution solution = new Solution();
-
-    }
-}
-
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    List<String> res;
-
-    public List<String> generateParenthesis(int n) {
-        res = new ArrayList<>();
-        recur(n - 1, n, 1, "(");
-        return res;
     }
 
-    /**
-     * @param restL 剩余的左括号数量
-     * @param restR 剩余的右括号数量
-     * @param lSubR 当前temp中，左括号数减去右括号数的值
-     * @param temp  当前的括号组合
-     */
-    public void recur(int restL, int restR, int lSubR, String temp) {
-        // 递归头
-        if (lSubR == 0 && restR == 0 && restL == 0) {
-            res.add(temp);
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        List<String> res;
+
+        public List<String> generateParenthesis(int n) {
+            res = new ArrayList<>();
+            recur(n - 1, n, 1, "(");
+            return res;
         }
 
-        if (restL > 0) {
-            recur(restL - 1, restR, lSubR + 1, temp + "(");
-        }
-        if (restR > 0 && lSubR - 1 >= 0) {
-            recur(restL, restR - 1, lSubR - 1, temp + ")");
+        /**
+         * @param restL 剩余的左括号数量
+         * @param restR 剩余的右括号数量
+         * @param lSubR 当前temp中，左括号数减去右括号数的值
+         * @param temp  当前的括号组合
+         */
+        public void recur(int restL, int restR, int lSubR, String temp) {
+            // 递归头
+            if (lSubR == 0 && restR == 0 && restL == 0) {
+                res.add(temp);
+            }
+
+            if (restL > 0) {
+                recur(restL - 1, restR, lSubR + 1, temp + "(");
+            }
+            if (restR > 0 && lSubR - 1 >= 0) {
+                recur(restL, restR - 1, lSubR - 1, temp + ")");
+            }
         }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
+}
