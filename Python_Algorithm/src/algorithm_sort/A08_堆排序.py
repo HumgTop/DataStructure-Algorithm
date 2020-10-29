@@ -5,7 +5,7 @@ def get_left_child(i: int) -> int:
     return 2 * i + 1
 
 
-def percdown(arr: List[int], cur: int, length: int):
+def heapify(arr: List[int], cur: int, length: int):
     temp = arr[cur]
     while get_left_child(cur) < length:
         child_index = get_left_child(cur)
@@ -22,12 +22,12 @@ def heapsort(arr: List[int]):
     # 将arr调整为大顶堆。非叶节点从下往上调整
     n = len(arr)
     for i in range(n // 2 - 1, -1, -1):  # arr[0]也需要调整，所以stop为-1（取到0）
-        percdown(arr, i, n)
+        heapify(arr, i, n)
 
     # 交换堆顶堆尾元素，重新调整堆
     for i in range(n - 1, 0, -1):
         arr[0], arr[i] = arr[i], arr[0]
-        percdown(arr, 0, i)
+        heapify(arr, 0, i)
 
 
 if __name__ == '__main__':
