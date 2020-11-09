@@ -126,23 +126,23 @@ public class No5_QuickSort {
     private static int partition(int[] arr, int left, int right) {
         //将最左侧元素作为基准值pivot
         int pivot = left;
-        int lPointer = pivot + 1;  //相当于l指针
+        int lp = pivot + 1, rp = lp;  //相当于l指针
         //r指针从数组最左端（不包括arr[left]）向right处移动
-        for (int rPointer = lPointer; rPointer <= right; rPointer++) {
+        while (rp <= right) {
             //如果向右移动过程中，r指针处小于基准值的值与index指针处的值进行交换
-            if (arr[rPointer] < arr[pivot]) {
+            if (arr[rp] < arr[pivot]) {
                 /*
                 如果rPointer==lPointer时，arr[rPointer]<arr[pivot]也需要进行交换（需要让lPointer++，否则下次
                 交换时lPointer指向的小于基准值的元素会被交换到右侧）
                  */
-                swap(arr, rPointer, lPointer++);
-            }
+                swap(arr, rp++, lp++);
+            } else rp++;
         }
         //**此时index-1指向的是比左侧分区的末尾元素（比基准值小的元素）
         //**将基准值交换到正确的位置（满足左侧分区小于基准值，右侧分区大于基准值）
-        swap(arr, pivot, lPointer - 1);
+        swap(arr, pivot, lp - 1);
         //返回此时基准值的下标
-        return lPointer - 1;
+        return lp - 1;
     }
 
     /**
