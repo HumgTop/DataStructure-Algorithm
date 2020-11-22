@@ -4,7 +4,8 @@ from typing import *
 def merge_sort(arr: List[int]) -> List[int]:
     length = len(arr)
     mid = length // 2
-    if mid < 1: return arr
+    if mid < 1:
+        return arr
 
     left = arr[0:mid]
     right = arr[mid:length]
