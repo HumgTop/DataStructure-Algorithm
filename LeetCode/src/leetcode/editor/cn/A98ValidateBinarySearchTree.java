@@ -33,7 +33,6 @@ package leetcode.editor.cn;
 // Related Topics 树 深度优先搜索 
 // 👍 818 👎 0
 
-import sun.jvm.hotspot.types.JFloatField;
 
 public class A98ValidateBinarySearchTree {
     public static void main(String[] args) {
