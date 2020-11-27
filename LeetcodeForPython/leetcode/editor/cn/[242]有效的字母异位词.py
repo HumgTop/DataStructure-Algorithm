@@ -26,7 +26,22 @@ from typing import *
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        return sorted(s) == sorted(t)
+        if len(s) != len(t): return False
+
+        cnt = [0] * 26  # 字母计数器
+        for ch in s:
+            cnt[ord(ch) - ord('a')] += 1
+
+        for ch in t:
+            if cnt[ord(ch) - ord('a')] == 0:
+                return False
+            cnt[ord(ch) - ord('a')] -= 1
+
+        for val in cnt:
+            if val != 0: return False
+
+        # 如果字母计数器的所有值都为0，返回True
+        return True
 
 
 # leetcode submit region end(Prohibit modification and deletion)
