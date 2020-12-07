@@ -1,6 +1,5 @@
 package leetcode.editor.cn;
 
-import com.sun.tools.javac.code.Lint;
 
 import java.util.*;
 
