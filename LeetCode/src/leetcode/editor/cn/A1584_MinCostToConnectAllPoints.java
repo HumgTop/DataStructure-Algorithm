@@ -14,7 +14,7 @@ public class A1584_MinCostToConnectAllPoints {
     class Solution {
         Map<Integer, Integer> parent = new HashMap<>();
         int res = 0;
-        int[] rank;
+        int[] rank; //记录节点的秩
         int edgeCount = 0;  //记录当前最小生成树的边数
 
         public int minCostConnectPoints(int[][] points) {
