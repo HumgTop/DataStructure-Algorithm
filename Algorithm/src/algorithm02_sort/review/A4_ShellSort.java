@@ -13,6 +13,7 @@ public class A4_ShellSort {
             arr[j] = temp;
         };
 
+        //gap最小为1
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
             for (int i = gap; i < arr.length; i++) {
                 if (arr[i] > arr[i - gap]) continue;

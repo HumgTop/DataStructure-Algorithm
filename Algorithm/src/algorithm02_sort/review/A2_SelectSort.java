@@ -14,7 +14,7 @@ public class A2_SelectSort {
         };
 
         for (int i = 0; i < arr.length - 1; i++) {
-            //记录本次扫描的最大值及索引，将其交换到arr[i]的位置
+            //记录本次扫描的最小值及索引，将其交换到arr[i]的位置
             int minTemp = Integer.MAX_VALUE;
             int minIdx = -1;
             for (int j = i + 1; j < arr.length; j++) {
