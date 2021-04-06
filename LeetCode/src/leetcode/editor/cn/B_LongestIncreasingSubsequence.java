@@ -27,7 +27,6 @@ public class B_LongestIncreasingSubsequence {
                 }
                 res = Math.max(res, dp[i]);
             }
-
             return res;
         }
     }

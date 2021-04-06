@@ -28,7 +28,7 @@ public class LeetCodeUtils {
      * @param inputStr 需要解析的字符串
      * @return 返回字符串构成的二维List（元素为不等长的一维数组）
      */
-    static List<int[]> get2dList(String inputStr) {
+    public static List<int[]> get2dList(String inputStr) {
         Matcher matcher = Pattern.compile("\\[([\\-?\\d|,]+)]").matcher(inputStr);
         //temp暂存解析数据
         List<int[]> parent = new ArrayList<>();
@@ -52,7 +52,7 @@ public class LeetCodeUtils {
      * @param inputStr 需要解析的字符串
      * @return 返回字符串构成的二维数组
      */
-    static int[][] get2dArr(String inputStr) {
+    public static int[][] get2dArr(String inputStr) {
         return get2dList(inputStr).toArray(new int[0][0]);
     }
 
@@ -61,7 +61,7 @@ public class LeetCodeUtils {
      * @return 返回字符串构成的一维数组
      */
 
-    static int[] get1dArr(String inputStr) {
+    public static int[] get1dArr(String inputStr) {
         Matcher matcher = Pattern.compile("([\\-]?\\d+)").matcher(inputStr);
         //temp暂存解析数据
         ArrayList<Integer> temp = new ArrayList<>();
