@@ -3,6 +3,10 @@ package algorithm02_sort.test;
 import org.junit.Test;
 
 public class MyTest {
+    public static void main(String[] args) {
+
+    }
+
     @Test
     public void test1() {
         double num = 3.2;
