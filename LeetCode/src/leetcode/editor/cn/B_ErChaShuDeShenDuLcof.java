@@ -26,22 +26,7 @@ public class B_ErChaShuDeShenDuLcof {
      */
     class Solution {
         public int maxDepth(TreeNode root) {
-            if (root == null) return 0;
-            Queue<TreeNode> queue = new LinkedList<>();
-            queue.add(root);
-            int depth = 0;
-            while (!queue.isEmpty()) {
-                int size = queue.size();
-                depth++;
-                //遍历本层所有节点，同时添加下层需遍历的节点
-                for (int i = 0; i < size; i++) {
-                    TreeNode cur = queue.remove();
-                    if (cur.left != null) queue.add(cur.left);
-                    if (cur.right != null) queue.add(cur.right);
-                }
-            }
-
-            return depth;
+            return root == null ? 0 : Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
