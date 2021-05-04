@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class B_BinaryTreeInorderTraversal {
+public class B_BinaryTreePostorderTraversal {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -39,22 +39,29 @@ public class B_BinaryTreeInorderTraversal {
      * Definition for a binary tree node.
      */
     class Solution {
-        public List<Integer> inorderTraversal(TreeNode root) {
+        public List<Integer> postorderTraversal(TreeNode root) {
+            //遍历顺序，左-右-根
             if (root == null) return new ArrayList<>();
-
             ArrayList<Integer> res = new ArrayList<>();
-            TreeNode cur = root;
             Deque<TreeNode> stack = new LinkedList<>();
+            TreeNode cur = root;
+            TreeNode prev = null;   //前一个遍历的节点
+
             while (!stack.isEmpty() || cur != null) {
-                //优先处理左子树
                 while (cur != null) {
                     stack.addLast(cur);
                     cur = cur.left;
                 }
-                TreeNode node = stack.removeLast();
-                res.add(node.val);
-                if (node.right != null) {
-                    cur = node.right;
+                cur = stack.removeLast();   //此节点左子树为空
+                if (cur.right == null || cur.right == prev) {
+                    //如果右子树也为空（或者右子树已遍历），则添加根节点值
+                    res.add(cur.val);
+                    prev = cur;
+                    cur = null;
+                } else {
+                    //如果右子树不为空，或者未曾遍历，则优先处理右子树
+                    stack.addLast(cur);
+                    cur = cur.right;
                 }
             }
 
