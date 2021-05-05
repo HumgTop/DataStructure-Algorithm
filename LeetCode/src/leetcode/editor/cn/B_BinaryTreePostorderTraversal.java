@@ -41,25 +41,25 @@ public class B_BinaryTreePostorderTraversal {
     class Solution {
         public List<Integer> postorderTraversal(TreeNode root) {
             //遍历顺序，左-右-根
-            if (root == null) return new ArrayList<>();
             ArrayList<Integer> res = new ArrayList<>();
+            if (root == null) return res;
+
             Deque<TreeNode> stack = new LinkedList<>();
             TreeNode cur = root;
-            TreeNode prev = null;   //前一个遍历的节点
+            TreeNode prev = null;   //前一次访问的节点
 
             while (!stack.isEmpty() || cur != null) {
                 while (cur != null) {
                     stack.addLast(cur);
                     cur = cur.left;
                 }
-                cur = stack.removeLast();   //此节点左子树为空
+                //此时左子树已处理
+                cur = stack.removeLast();   //出栈根节点
                 if (cur.right == null || cur.right == prev) {
-                    //如果右子树也为空（或者右子树已遍历），则添加根节点值
                     res.add(cur.val);
                     prev = cur;
                     cur = null;
                 } else {
-                    //如果右子树不为空，或者未曾遍历，则优先处理右子树
                     stack.addLast(cur);
                     cur = cur.right;
                 }

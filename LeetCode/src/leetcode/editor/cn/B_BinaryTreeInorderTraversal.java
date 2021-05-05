@@ -40,21 +40,26 @@ public class B_BinaryTreeInorderTraversal {
      */
     class Solution {
         public List<Integer> inorderTraversal(TreeNode root) {
-            if (root == null) return new ArrayList<>();
-
+            //遍历顺序：左-根-右
             ArrayList<Integer> res = new ArrayList<>();
+            if (root == null) {
+                return res;
+            }
+
             TreeNode cur = root;
             Deque<TreeNode> stack = new LinkedList<>();
             while (!stack.isEmpty() || cur != null) {
-                //优先处理左子树
                 while (cur != null) {
                     stack.addLast(cur);
                     cur = cur.left;
                 }
-                TreeNode node = stack.removeLast();
-                res.add(node.val);
-                if (node.right != null) {
-                    cur = node.right;
+                //此时cur为null，左子树已处理。继续处理根节点
+                cur = stack.removeLast();
+                res.add(cur.val);
+                if (cur.right == null) {
+                    cur = null;
+                } else {
+                    cur = cur.right;
                 }
             }
 
