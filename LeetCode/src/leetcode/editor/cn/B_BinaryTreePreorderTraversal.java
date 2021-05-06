@@ -48,7 +48,6 @@ public class B_BinaryTreePreorderTraversal {
             while (!stack.isEmpty()) {
                 TreeNode cur = stack.removeLast();
                 res.add(cur.val);
-                //先遍历左子树，所以右子树先进栈
                 if (cur.right != null) stack.addLast(cur.right);
                 if (cur.left != null) stack.addLast(cur.left);
             }
