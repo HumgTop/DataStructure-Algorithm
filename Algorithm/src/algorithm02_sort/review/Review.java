@@ -13,28 +13,29 @@ public class Review {
 
     static void sort(int[] arr) {
         buildMaxHeap(arr);
-        //固定最大值，重新调整头节点
-        for (int size = arr.length; size > 1; size--) {
-            swap(arr, 0, size - 1);
-            heapify(arr, 0, size - 1);
+        for (int i = arr.length - 1; i > 0; i--) {
+            swap(0, i, arr);    //固定元素排序
+            //重新堆化
+            heapify(arr, 0, i);
         }
     }
 
+    //初始化建立最大堆
     static void buildMaxHeap(int[] arr) {
-        int size = arr.length;
-        //从最后一个非叶节点开始堆化
-        for (int i = size / 2 - 1; i >= 0; i--) {
-            heapify(arr, i, size);
+        //从非叶节点索引递减进行heapify
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            heapify(arr, i, arr.length);
         }
     }
 
-    //将节点idx下沉到正确的位置
     static void heapify(int[] arr, int idx, int heapSize) {
-        int temp = arr[idx];    //保存副本
+        //将节点idx下沉到合适的位置
+        int temp = arr[idx];
         while (idx * 2 + 1 < heapSize) {
             int childIdx = idx * 2 + 1;
-            if (childIdx + 1 < heapSize && arr[childIdx] < arr[childIdx + 1]) childIdx++;
-
+            if (childIdx + 1 < heapSize && arr[childIdx + 1] > arr[childIdx]) {
+                childIdx++;
+            }
             if (temp < arr[childIdx]) {
                 arr[idx] = arr[childIdx];
             } else break;
@@ -44,7 +45,7 @@ public class Review {
     }
 
 
-    static void swap(int[] arr, int i, int j) {
+    static void swap(int i, int j, int[] arr) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;

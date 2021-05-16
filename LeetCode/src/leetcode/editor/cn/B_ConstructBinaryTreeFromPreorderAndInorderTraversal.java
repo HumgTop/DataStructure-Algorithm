@@ -2,6 +2,9 @@ package leetcode.editor.cn;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class B_ConstructBinaryTreeFromPreorderAndInorderTraversal {
     @Test
@@ -36,45 +39,26 @@ public class B_ConstructBinaryTreeFromPreorderAndInorderTraversal {
     class Solution {
         int[] preorder;
         int[] inorder;
+        Map<Integer, Integer> indexMap;
 
         public TreeNode buildTree(int[] preorder, int[] inorder) {
             //前序：根，左，右
             //中序：左，根，右
-            this.preorder = preorder;
-            this.inorder = inorder;
-            int n = preorder.length;
-            return recur(0, n - 1, 0, n - 1);
-        }
-
-        /**
-         * 构造当前子树，并返回子树根节点到上层
-         *
-         * @param preLeftIdx
-         * @param preRightIdx
-         * @param inLeftIdx
-         * @param inRightIdx
-         * @return
-         */
-        TreeNode recur(int preLeftIdx, int preRightIdx, int inLeftIdx, int inRightIdx) {
-            if (preLeftIdx > preRightIdx) {
-                //此时为叶子节点
-                return null;
-            }
-            TreeNode root = new TreeNode(preorder[preLeftIdx]); //构造本子树根节点
-            int rootIdxInInorder = getIdxInInorder(preorder[preLeftIdx]);   //根节点在中序遍历数组中的索引
-            //左子树的元素个数
-            int leftChildCnt = rootIdxInInorder - inLeftIdx;
-            int lastLeftElementInPreIdx = preLeftIdx + leftChildCnt;
-            root.left = recur(preLeftIdx + 1, lastLeftElementInPreIdx, inLeftIdx, rootIdxInInorder - 1);
-            root.right = recur(lastLeftElementInPreIdx + 1, preRightIdx, rootIdxInInorder + 1, inRightIdx);
-            return root;
-        }
-
-        int getIdxInInorder(int value) {
+            indexMap = new HashMap<>();
             for (int i = 0; i < inorder.length; i++) {
-                if (inorder[i] == value) return i;
+                indexMap.put(inorder[i], i);
             }
-            return -1;
+            return build(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
+        }
+
+        TreeNode build(int[] preorder, int[] inorder, int preL, int preR, int inL, int inR) {
+            if (preL > preR) return null;   //越过叶子节点
+            TreeNode root = new TreeNode(preorder[preL]);
+            Integer inorderRootIdx = indexMap.get(root.val);
+            int subLeftTreeSize = inorderRootIdx - inL; //左子树大小
+            root.left = build(preorder, inorder, preL + 1, preL + subLeftTreeSize, inL, subLeftTreeSize + inL - 1);
+            root.right = build(preorder, inorder, preL + subLeftTreeSize + 1, preR, inorderRootIdx + 1, inR);
+            return root;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

@@ -7,7 +7,7 @@ public class B_ErChaShuDeZuiJinGongGongZuXianLcof {
     @Test
     public void test() {
         Solution solution = new Solution();
-
+        System.out.println("hi");
     }
 
     public class TreeNode {

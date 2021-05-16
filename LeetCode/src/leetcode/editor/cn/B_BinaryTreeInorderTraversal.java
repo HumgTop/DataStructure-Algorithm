@@ -41,25 +41,23 @@ public class B_BinaryTreeInorderTraversal {
     class Solution {
         public List<Integer> inorderTraversal(TreeNode root) {
             //遍历顺序：左-根-右
-            ArrayList<Integer> res = new ArrayList<>();
-            if (root == null) {
-                return res;
-            }
+            if (root == null) return new ArrayList<>();
 
-            TreeNode cur = root;
+            ArrayList<Integer> res = new ArrayList<>();
             Deque<TreeNode> stack = new LinkedList<>();
-            while (!stack.isEmpty() || cur != null) {
-                while (cur != null) {
-                    stack.addLast(cur);
-                    cur = cur.left;
+            while (!stack.isEmpty() || root != null) {
+                //如果有左子树则一直入栈
+                while (root != null) {
+                    stack.addLast(root);
+                    root = root.left;
                 }
-                //此时cur为null，左子树已处理。继续处理根节点
-                cur = stack.removeLast();
-                res.add(cur.val);
-                if (cur.right == null) {
-                    cur = null;
+                //此时已遍历到左子树最深处，开始出栈元素
+                root = stack.removeLast();
+                res.add(root.val);
+                if (root.right != null) {
+                    root = root.right;  //将右子树作为根节点进行下一轮循环
                 } else {
-                    cur = cur.right;
+                    root = null;
                 }
             }
 
@@ -67,6 +65,5 @@ public class B_BinaryTreeInorderTraversal {
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
-
-
 }
+

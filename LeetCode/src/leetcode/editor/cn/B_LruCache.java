@@ -15,7 +15,7 @@ public class B_LruCache {
         int capacity;
 
         public LRUCache(int capacity) {
-            super(capacity, 0.75F, true);
+            super(capacity, 0.75f, true);   //按访问顺序排序
             this.capacity = capacity;
         }
 
@@ -27,10 +27,9 @@ public class B_LruCache {
             super.put(key, value);
         }
 
-        //该方法返回true则执行afterNodeInsertion方法
         @Override
         protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
-            return super.size() > capacity;  //容量溢出设定大小时，移除Eldest元素
+            return size() > capacity;   //当哈希表大小超过容量时，返回true（删除末尾节点）
         }
     }
 
