@@ -14,26 +14,20 @@ public class B_LinkedListCycleIi {
      */
     public class Solution {
         public ListNode detectCycle(ListNode head) {
-            ListNode slow = head;
             ListNode fast = head;
-            //快慢指针相遇时，从头节点出发第三个指针p，则p与slow在入环点相遇
-            while (fast != null) {
+            ListNode slow = head;
+            while (fast != null && fast.next != null) {
+                fast = fast.next.next;
                 slow = slow.next;
-                if (fast.next != null) fast = fast.next.next;
-                else return null;
-
-                //如果快慢指针相遇
-                if (fast == slow) {
-                    ListNode p = head;
-                    while (p != slow) {
-                        p = p.next;
-                        slow = slow.next;
-                    }
-                    return p;
-                }
+                if (slow == fast) break;
             }
-
-            return null;
+            if (fast == null || fast.next == null) return null;
+            ListNode p = head;
+            while (p != slow) {
+                p = p.next;
+                slow = slow.next;
+            }
+            return p;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
