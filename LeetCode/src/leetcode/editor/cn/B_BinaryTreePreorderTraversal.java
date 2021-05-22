@@ -37,16 +37,17 @@ public class B_BinaryTreePreorderTraversal {
      */
     class Solution {
         public List<Integer> preorderTraversal(TreeNode root) {
-            //迭代法
-            if (root == null) return new ArrayList<>();
+            //根 左 右
             ArrayList<Integer> res = new ArrayList<>();
-            Deque<TreeNode> stack = new ArrayDeque<>();
+            if (root == null) return res;
+            Deque<TreeNode> stack = new LinkedList<>();
+
             stack.addLast(root);
             while (!stack.isEmpty()) {
-                TreeNode cur = stack.removeLast();
-                res.add(cur.val);
-                if (cur.right != null) stack.addLast(cur.right);
-                if (cur.left != null) stack.addLast(cur.left);
+                root = stack.removeLast();
+                res.add(root.val);
+                if (root.right != null) stack.addLast(root.right);
+                if (root.left != null) stack.addLast(root.left);
             }
 
             return res;
