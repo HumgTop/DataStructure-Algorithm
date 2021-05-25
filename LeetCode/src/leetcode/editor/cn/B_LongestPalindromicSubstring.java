@@ -11,31 +11,38 @@ public class B_LongestPalindromicSubstring {
     class Solution {
         public String longestPalindrome(String s) {
             char[] chs = s.toCharArray();
-            boolean[][] dp = new boolean[s.length()][s.length()];   //dp[i][j]表示索引i到j的子串是否是回文串
-            int maxLen = 1;
-            int i = 0, j = 0;
-            //转移过程：从短子串向长子串转移
-            //delta为end-start，子串长度为delta+1
-            for (int delta = 0; delta < s.length(); delta++) {
-                int end;
-                //end越界则结束循环
-                for (int start = 0; (end = start + delta) < s.length(); start++) {
-                    if (delta == 0)
-                        dp[start][end] = true;
-                    else if (delta == 1 && chs[start] == chs[end])
-                        dp[start][end] = true;
-                    else {
-                        dp[start][end] = dp[start + 1][end - 1] && (chs[start] == chs[end]);
+            int n = s.length();
+            boolean[][] dp = new boolean[n][n]; //dp[i][j]表示s[i:j]是否为回文串
+            int res = 1;
+            int start = 0;
+            int end = 0;
+
+            //delta为j-i，delta最大为n-1。
+            //回文串总是从短子串向长子串转移的
+            for (int delta = 0; delta < n; delta++) {
+                //j=i+delta
+                int j;
+                for (int i = 0; (j = i + delta) < n; i++) {
+                    if (delta == 0) {
+                        //长度为1的子串都是回文串
+                        dp[i][j] = true;
+                    } else if (delta == 1 && chs[i] == chs[j]) {
+                        //长度为2的子串
+                        dp[i][j] = true;
+                    } else {
+                        if (dp[i + 1][j - 1] && chs[i] == chs[j]) {
+                            dp[i][j] = true;
+                        }
                     }
-                    if (dp[start][end] && delta + 1 > maxLen) {
-                        maxLen = delta + 1;
-                        i = start;
-                        j = end;
+                    if (dp[i][j] && delta + 1 > res) {
+                        res = delta + 1;
+                        start = i;
+                        end = j;
                     }
                 }
             }
 
-            return s.substring(i, j + 1);
+            return s.substring(start, end + 1);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
