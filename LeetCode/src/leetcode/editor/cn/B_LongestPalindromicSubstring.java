@@ -3,8 +3,8 @@ package leetcode.editor.cn;
 
 public class B_LongestPalindromicSubstring {
     public static void main(String[] args) {
-
-
+        String s = new B_LongestPalindromicSubstring().new Solution().longestPalindrome("cbbd");
+        System.out.println(s);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -12,39 +12,40 @@ public class B_LongestPalindromicSubstring {
         public String longestPalindrome(String s) {
             char[] chs = s.toCharArray();
             int n = s.length();
-            boolean[][] dp = new boolean[n][n]; //dp[i][j]表示s[i:j]是否为回文串
-            int res = 1;
-            int start = 0;
-            int end = 0;
+            boolean[][] dp = new boolean[n][n]; //dp[i][j]表示[i,j]子串是否为回文串
+            int maxLen = 1;
+            int left = 0;
+            int right = 0;
 
-            //delta为j-i，delta最大为n-1。
-            //回文串总是从短子串向长子串转移的
+            //初始化dp，delta=0的子串都为回文串
             for (int delta = 0; delta < n; delta++) {
-                //j=i+delta
-                int j;
-                for (int i = 0; (j = i + delta) < n; i++) {
+                //start为子串的首位字符索引，start+delta为末位字符索引
+                int end;
+                for (int start = 0; start + delta < n; start++) {
+                    end = start + delta;
                     if (delta == 0) {
-                        //长度为1的子串都是回文串
-                        dp[i][j] = true;
-                    } else if (delta == 1 && chs[i] == chs[j]) {
-                        //长度为2的子串
-                        dp[i][j] = true;
+                        dp[start][end] = true;
+                    } else if (delta == 1) {
+                        if (chs[start] == chs[end]) dp[start][end] = true;
                     } else {
-                        if (dp[i + 1][j - 1] && chs[i] == chs[j]) {
-                            dp[i][j] = true;
+                        //正常转移
+                        if (dp[start + 1][end - 1] && chs[start] == chs[end]) {
+                            dp[start][end] = true;
                         }
                     }
-                    if (dp[i][j] && delta + 1 > res) {
-                        res = delta + 1;
-                        start = i;
-                        end = j;
+
+                    if (dp[start][end] && end - start + 1 > maxLen) {
+                        maxLen = end - start + 1;
+                        left = start;
+                        right = end;
                     }
                 }
             }
 
-            return s.substring(start, end + 1);
+            return s.substring(left, right + 1);
         }
     }
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 
