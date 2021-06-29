@@ -3,7 +3,7 @@ package leetcode.editor.cn;
 import org.junit.Test;
 
 
-public class B_InvertBinaryTree {
+public class B_DiameterOfBinaryTree {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -34,14 +34,23 @@ public class B_InvertBinaryTree {
      * Definition for a binary tree node.
      */
     class Solution {
-        public TreeNode invertTree(TreeNode root) {
-            if (root == null) return null;
-            TreeNode left = invertTree(root.left);
-            TreeNode right = invertTree(root.right);
-            root.left = right;
-            root.right = left;
+        int res = 0;
 
-            return root;
+        public int diameterOfBinaryTree(TreeNode root) {
+            dfs(root);
+            return res;
+        }
+
+        //返回该节点的深度
+        int dfs(TreeNode node) {
+            if (node == null) {
+                return 0;
+            }
+
+            int leftDepth = dfs(node.left);
+            int rightDepth = dfs(node.right);
+            res = Math.max((leftDepth + rightDepth), res);
+            return Math.max(leftDepth, rightDepth) + 1;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

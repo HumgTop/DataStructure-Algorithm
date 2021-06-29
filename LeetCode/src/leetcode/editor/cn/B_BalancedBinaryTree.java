@@ -3,7 +3,7 @@ package leetcode.editor.cn;
 import org.junit.Test;
 
 
-public class B_InvertBinaryTree {
+public class B_BalancedBinaryTree {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -34,14 +34,22 @@ public class B_InvertBinaryTree {
      * Definition for a binary tree node.
      */
     class Solution {
-        public TreeNode invertTree(TreeNode root) {
-            if (root == null) return null;
-            TreeNode left = invertTree(root.left);
-            TreeNode right = invertTree(root.right);
-            root.left = right;
-            root.right = left;
+        public boolean isBalanced(TreeNode root) {
+            if (root == null) return true;
+            return dfs(root) != -1;
+        }
 
-            return root;
+        int dfs(TreeNode node) {
+            if (node == null) return 0;
+            int leftHeight = dfs(node.left);
+            if (leftHeight == -1) return -1;    //非平衡树则返回（剪枝）
+
+            int rightHeight = dfs(node.right);
+            if (rightHeight == -1) return -1;   //非平衡树则返回（剪枝）
+
+            if (Math.abs(leftHeight - rightHeight) > 1) return -1;
+
+            return Math.max(leftHeight, rightHeight) + 1;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
