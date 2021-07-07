@@ -41,11 +41,13 @@ public class B_DuiChengDeErChaShuLcof {
      */
     class Solution {
         public boolean isSymmetric(TreeNode root) {
-            return root == null || recur(root.left, root.right);
+            if (root == null) return true;
+            return recur(root.left, root.right);
         }
 
         //若左子树L与右子树R对称返回true，利用递归从最底层开始比较
         boolean recur(TreeNode L, TreeNode R) {
+            //终止条件
             if (L == null && R == null) return true;
             if (L == null || R == null || L.val != R.val) return false;
 
