@@ -15,32 +15,41 @@ public class B_SortAnArray {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] sortArray(int[] nums) {
-            //快速排序
-            quickSort(nums, 0, nums.length - 1);
-            return nums;
+            //归并排序
+            return sort(nums);
         }
 
-        void quickSort(int[] nums, int left, int right) {
-            if (left >= right) return;
-            int partitionIdx = partition(nums, left, right);
+        //在回溯过程中，对返回的子数组进行归并排序
+        int[] sort(int[] nums) {
+            //终止条件
+            if (nums.length == 1) return nums;
 
-            quickSort(nums, left, partitionIdx);
-            quickSort(nums, partitionIdx + 1, right);
+            int mid = nums.length / 2;
+            int[] left = Arrays.copyOfRange(nums, 0, mid);
+            int[] right = Arrays.copyOfRange(nums, mid, nums.length);
+
+            return merge(sort(left), sort(right));
         }
 
-        int partition(int[] nums, int left, int right) {
-            int pivotIdx = left;
-            int i = left + 1, j = i;
-            while (j <= right) {
-                if (nums[j] < nums[pivotIdx]) {
-                    swap(nums, i++, j);
+        int[] merge(int[] left, int[] right) {
+            int[] res = new int[left.length + right.length];
+            int i = 0, j = 0, k = 0;
+            while (i < left.length && j < right.length) {
+                if (left[i] < right[j]) {
+                    res[k++] = left[i++];
+                } else {
+                    res[k++] = right[j++];
                 }
-                j++;
             }
-
-            swap(nums, pivotIdx, i - 1);
-            return i - 1;
+            while (i < left.length) {
+                res[k++] = left[i++];
+            }
+            while (j < right.length) {
+                res[k++] = right[j++];
+            }
+            return res;
         }
+
 
         void swap(int[] nums, int i, int j) {
             int temp = nums[i];
