@@ -39,14 +39,15 @@ public class B_SymmetricTree {
             return dfs(root.left, root.right);
         }
 
-        boolean dfs(TreeNode left, TreeNode right) {
+        private boolean dfs(TreeNode left, TreeNode right) {
             if (left == null && right == null) return true;
 
             if (left == null || right == null || left.val != right.val) return false;
-
-            //递归判断左子树的右节点，右子树的左节点。以及左子树的左节点，右子树的右节点
-            return dfs(left.right, right.left) && dfs(left.left, right.right);
+            //本层判断无问题，递归下一层进行判断
+            return dfs(left.left, right.right) && dfs(left.right, right.left);
         }
+
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 

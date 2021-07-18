@@ -16,40 +16,39 @@ public class B_SortAnArray {
     class Solution {
         public int[] sortArray(int[] nums) {
             //归并排序
-            return sort(nums);
+            buildMaxHeap(nums);
+            int len = nums.length;
+            for (int i = len; i > 1; i--) {
+                swap(nums, 0, i - 1);   //确定一个元素的顺序
+                heapify(nums, 0, i - 1);
+            }
+            return nums;
         }
 
-        //在回溯过程中，对返回的子数组进行归并排序
-        int[] sort(int[] nums) {
-            //终止条件
-            if (nums.length == 1) return nums;
-
-            int mid = nums.length / 2;
-            int[] left = Arrays.copyOfRange(nums, 0, mid);
-            int[] right = Arrays.copyOfRange(nums, mid, nums.length);
-
-            return merge(sort(left), sort(right));
+        //第一次初始化最大堆
+        void buildMaxHeap(int[] nums) {
+            //从最后一个非叶节点倒序调整
+            int idx = nums.length / 2 - 1;
+            for (int i = idx; i >= 0; i--) {
+                heapify(nums, i, nums.length);
+            }
         }
 
-        int[] merge(int[] left, int[] right) {
-            int[] res = new int[left.length + right.length];
-            int i = 0, j = 0, k = 0;
-            while (i < left.length && j < right.length) {
-                if (left[i] < right[j]) {
-                    res[k++] = left[i++];
-                } else {
-                    res[k++] = right[j++];
+        void heapify(int[] nums, int idx, int len) {
+            int temp = nums[idx];
+            //类似插入排序，将节点idx下沉到合适的位置
+            while (idx * 2 + 1 < len) {
+                int childIdx = idx * 2 + 1;
+                if (childIdx + 1 < len && nums[childIdx + 1] > nums[childIdx]) {
+                    childIdx++;
                 }
+                if (temp < nums[childIdx]) {
+                    nums[idx] = nums[childIdx];
+                    idx = childIdx;
+                } else break;
             }
-            while (i < left.length) {
-                res[k++] = left[i++];
-            }
-            while (j < right.length) {
-                res[k++] = right[j++];
-            }
-            return res;
+            nums[idx] = temp;
         }
-
 
         void swap(int[] nums, int i, int j) {
             int temp = nums[i];

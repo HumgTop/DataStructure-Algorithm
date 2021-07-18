@@ -45,19 +45,19 @@ public class B_BinaryTreePostorderTraversal {
             if (root == null) return res;
 
             Deque<TreeNode> stack = new LinkedList<>();
-            TreeNode preSeen = null;
-            while (!stack.isEmpty() || root != null) {
+            TreeNode pre = null;
+            while (root != null || !stack.isEmpty()) {
                 while (root != null) {
                     stack.addLast(root);
                     root = root.left;
                 }
                 root = stack.removeLast();
-                if (root.right != null && preSeen != root.right) {
-                    stack.addLast(root);    //重新入栈（需要先访问右子树）
+                if (root.right != null && root.right != pre) {
+                    stack.addLast(root);
                     root = root.right;
                 } else {
                     res.add(root.val);
-                    preSeen = root; //标记已访问
+                    pre = root;
                     root = null;
                 }
             }

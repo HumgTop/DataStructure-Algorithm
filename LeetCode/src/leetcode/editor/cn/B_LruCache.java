@@ -15,7 +15,7 @@ public class B_LruCache {
         int capacity;
 
         public LRUCache(int capacity) {
-            super(capacity, 0.75f, true);   //按访问顺序排序
+            super(capacity, 0.75f, true);
             this.capacity = capacity;
         }
 
@@ -28,8 +28,8 @@ public class B_LruCache {
         }
 
         @Override
-        protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
-            return size() > capacity;   //当哈希表大小超过容量时，返回true（删除末尾节点）
+        public boolean removeEldestEntry(Map.Entry<Integer, Integer> entry) {
+            return super.size() > this.capacity;
         }
     }
 

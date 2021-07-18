@@ -48,11 +48,9 @@ public class B_MergeKSortedLists {
          * @return
          */
         ListNode merge(ListNode[] lists, int left, int right) {
-            if (left == right) {
-                return lists[left];
-            }
-            //分治：分区后进行子递归直到left==right才开始处理
-            int mid = (left + right) >> 1;
+            if (left == right) return lists[left];
+
+            int mid = (left + right) / 2;
             return merge2ListNode(merge(lists, left, mid), merge(lists, mid + 1, right));
         }
 

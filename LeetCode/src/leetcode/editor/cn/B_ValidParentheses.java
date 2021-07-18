@@ -20,9 +20,20 @@ public class B_ValidParentheses {
             Deque<Character> stack = new LinkedList<>();
 
             for (char ch : chs) {
-
+                if (ch == '(' || ch == '[' || ch == '{') {
+                    stack.addLast(ch);
+                } else if (stack.isEmpty()) {
+                    return false;
+                } else if (ch == ')' && stack.peekLast() == '(') {
+                    stack.removeLast();
+                } else if (ch == ']' && stack.peekLast() == '[') {
+                    stack.removeLast();
+                } else if (ch == '}' && stack.peekLast() == '{') {
+                    stack.removeLast();
+                } else return false;
             }
-            return true;
+
+            return stack.isEmpty();
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
