@@ -14,8 +14,6 @@ public class B_ValidateIpAddress {
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
-    import java.util.regex.Matcher;
-    import java.util.regex.Pattern;
 
     class Solution {
         public String validIPAddress(String IP) {
