@@ -15,7 +15,7 @@ public class B_LruCache {
         int capacity;
 
         public LRUCache(int capacity) {
-            super(capacity, 0.75F, true);
+            super(capacity, 0.75f, true);
             this.capacity = capacity;
         }
 
@@ -27,10 +27,9 @@ public class B_LruCache {
             super.put(key, value);
         }
 
-        //该方法返回true则执行afterNodeInsertion方法
         @Override
-        protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
-            return super.size() > capacity;  //容量溢出设定大小时，移除Eldest元素
+        public boolean removeEldestEntry(Map.Entry<Integer, Integer> entry) {
+            return super.size() > this.capacity;
         }
     }
 

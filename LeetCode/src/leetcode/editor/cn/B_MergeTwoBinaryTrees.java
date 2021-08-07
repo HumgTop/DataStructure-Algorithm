@@ -2,10 +2,8 @@ package leetcode.editor.cn;
 
 import org.junit.Test;
 
-import java.util.*;
 
-
-public class B_BinaryTreePreorderTraversal {
+public class B_MergeTwoBinaryTrees {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -36,21 +34,15 @@ public class B_BinaryTreePreorderTraversal {
      * Definition for a binary tree node.
      */
     class Solution {
-        public List<Integer> preorderTraversal(TreeNode root) {
-            //根 左 右
-            ArrayList<Integer> res = new ArrayList<>();
-            if (root == null) return res;
-            Deque<TreeNode> stack = new LinkedList<>();
+        public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+            if (root1 == null) return root2;
+            if (root2 == null) return root1;
 
-            stack.addLast(root);
-            while (!stack.isEmpty()) {
-                root = stack.removeLast();
-                res.add(root.val);
-                if (root.right != null) stack.addLast(root.right);
-                if (root.left != null) stack.addLast(root.left);
-            }
+            TreeNode newNode = new TreeNode(root1.val + root2.val);
+            newNode.left = mergeTrees(root1.left, root2.left);
+            newNode.right = mergeTrees(root1.right, root2.right);
 
-            return res;
+            return newNode;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

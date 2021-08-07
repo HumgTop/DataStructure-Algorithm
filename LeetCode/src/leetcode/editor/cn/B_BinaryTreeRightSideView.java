@@ -2,13 +2,10 @@ package leetcode.editor.cn;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
-public class B_BinaryTreeInorderTraversal {
+public class B_BinaryTreeRightSideView {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -39,25 +36,23 @@ public class B_BinaryTreeInorderTraversal {
      * Definition for a binary tree node.
      */
     class Solution {
-        public List<Integer> inorderTraversal(TreeNode root) {
-            //遍历顺序：左-根-右
+        public List<Integer> rightSideView(TreeNode root) {
             if (root == null) return new ArrayList<>();
 
+            //层序遍历，只取每层的最后一个元素
+            Queue<TreeNode> queue = new LinkedList<>();
             ArrayList<Integer> res = new ArrayList<>();
-            Deque<TreeNode> stack = new LinkedList<>();
-            while (!stack.isEmpty() || root != null) {
-                //如果有左子树则一直入栈
-                while (root != null) {
-                    stack.addLast(root);
-                    root = root.left;
-                }
-                //此时已遍历到左子树最深处，开始出栈元素
-                root = stack.removeLast();
-                res.add(root.val);
-                if (root.right != null) {
-                    root = root.right;  //将右子树作为根节点进行下一轮循环
-                } else {
-                    root = null;
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                int size = queue.size();
+                for (int i = 0; i < size; i++) {
+                    TreeNode cur = queue.remove();
+                    //每层最后一个元素加入到res中
+                    if (i == size - 1) {
+                        res.add(cur.val);
+                    }
+                    if (cur.left != null) queue.add(cur.left);
+                    if (cur.right != null) queue.add(cur.right);
                 }
             }
 
@@ -65,5 +60,6 @@ public class B_BinaryTreeInorderTraversal {
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
-}
 
+
+}

@@ -2,10 +2,8 @@ package leetcode.editor.cn;
 
 import org.junit.Test;
 
-import java.util.*;
 
-
-public class B_BinaryTreePreorderTraversal {
+public class B_SymmetricTree {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -36,22 +34,20 @@ public class B_BinaryTreePreorderTraversal {
      * Definition for a binary tree node.
      */
     class Solution {
-        public List<Integer> preorderTraversal(TreeNode root) {
-            //根 左 右
-            ArrayList<Integer> res = new ArrayList<>();
-            if (root == null) return res;
-            Deque<TreeNode> stack = new LinkedList<>();
-
-            stack.addLast(root);
-            while (!stack.isEmpty()) {
-                root = stack.removeLast();
-                res.add(root.val);
-                if (root.right != null) stack.addLast(root.right);
-                if (root.left != null) stack.addLast(root.left);
-            }
-
-            return res;
+        public boolean isSymmetric(TreeNode root) {
+            if (root == null) return true;
+            return dfs(root.left, root.right);
         }
+
+        private boolean dfs(TreeNode left, TreeNode right) {
+            if (left == null && right == null) return true;
+
+            if (left == null || right == null || left.val != right.val) return false;
+            //本层判断无问题，递归下一层进行判断
+            return dfs(left.left, right.right) && dfs(left.right, right.left);
+        }
+
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 

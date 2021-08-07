@@ -2,10 +2,8 @@ package leetcode.editor.cn;
 
 import org.junit.Test;
 
-import java.util.*;
 
-
-public class B_BinaryTreePreorderTraversal {
+public class B_InvertBinaryTree {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -36,21 +34,14 @@ public class B_BinaryTreePreorderTraversal {
      * Definition for a binary tree node.
      */
     class Solution {
-        public List<Integer> preorderTraversal(TreeNode root) {
-            //根 左 右
-            ArrayList<Integer> res = new ArrayList<>();
-            if (root == null) return res;
-            Deque<TreeNode> stack = new LinkedList<>();
+        public TreeNode invertTree(TreeNode root) {
+            if (root == null) return null;
+            TreeNode left = invertTree(root.left);
+            TreeNode right = invertTree(root.right);
+            root.left = right;
+            root.right = left;
 
-            stack.addLast(root);
-            while (!stack.isEmpty()) {
-                root = stack.removeLast();
-                res.add(root.val);
-                if (root.right != null) stack.addLast(root.right);
-                if (root.left != null) stack.addLast(root.left);
-            }
-
-            return res;
+            return root;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

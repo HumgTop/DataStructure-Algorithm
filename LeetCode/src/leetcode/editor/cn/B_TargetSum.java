@@ -6,43 +6,40 @@ import java.util.Map;
 
 public class B_TargetSum {
     public static void main(String[] args) {
-
-
+        System.out.println(new B_TargetSum().new Solution().findTargetSumWays(LeetCodeUtils.get1dArr("[1,1,1,1,1]"), 3));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        Map<int[], Integer> map;
-        int[] nums;
-        int level;
-        int S;
 
         public int findTargetSumWays(int[] nums, int S) {
-            map = new HashMap<>();
-            this.nums = nums;
-            this.level = nums.length;
-            this.S = S;
-            return dfs(0, 0);   //从(0,0)出发到(level,S)节点的路径数之和
-        }
+            int n = nums.length;
+            int[][] dp = new int[n][2001]; //下标[0,i-1]的元素组成和为j的方案数
+            for (int i = 0; i < n; i++) {
+                //实际和范围[-1000,1000]平移至[0,2000]
+                for (int j = 0; j <= 2000; j++) {
+                    if (i == 0) {
+                        //初始化
+                        if (nums[0] + 1000 == j || -nums[0] + 1000 == j) {
+                            dp[i][j]++;
+                            //nums[0]==0的话，dp[0][1000]应为2
+                            if (nums[0] == 0) {
+                                dp[i][j]++;
+                            }
+                        }
+                    } else {
+                        if (j >= nums[i]) {
+                            dp[i][j] += dp[i - 1][j - nums[i]];
+                        }
+                        if (j + nums[i] <= 2000) {
+                            dp[i][j] += dp[i - 1][j + nums[i]];
+                        }
+                    }
+                }
+            }
 
-        /**
-         * @param i   当前层数
-         * @param sum 当前节点值
-         * @return 从(i, sum)到达(level, S)的路径总数
-         */
-        int dfs(int i, int sum) {
-            //终止条件
-            if (i == level) {
-                return sum == S ? 1 : 0;
-            }
-            //递归前先判断哈希表中是否已有结果
-            int[] key = {i, sum};
-            //若不存在，则计算结果后存入哈希表
-            if (!map.containsKey(key)) {
-                int res = dfs(i + 1, sum - nums[i]) + dfs(i + 1, sum + nums[i]);
-                map.put(key, res);
-            }
-            return map.get(key);
+
+            return dp[n - 1][S + 1000];
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

@@ -29,9 +29,10 @@ public class B_ErChaShuDeJingXiangLcof {
         TreeNode recur(TreeNode root) {
             if (root == null) return null;
 
-            TreeNode temp = root.left;  //创建临时节点指向原来的左子树
-            root.left = recur(root.right);  //更改左子树指向
+            TreeNode temp = root.left;
+            root.left = recur(root.right);
             root.right = recur(temp);
+
             return root;
         }
     }

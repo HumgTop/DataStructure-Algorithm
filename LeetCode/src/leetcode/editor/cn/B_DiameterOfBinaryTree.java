@@ -2,10 +2,8 @@ package leetcode.editor.cn;
 
 import org.junit.Test;
 
-import java.util.*;
 
-
-public class B_BinaryTreePreorderTraversal {
+public class B_DiameterOfBinaryTree {
     @Test
     public void test() {
         Solution solution = new Solution();
@@ -36,21 +34,23 @@ public class B_BinaryTreePreorderTraversal {
      * Definition for a binary tree node.
      */
     class Solution {
-        public List<Integer> preorderTraversal(TreeNode root) {
-            //根 左 右
-            ArrayList<Integer> res = new ArrayList<>();
-            if (root == null) return res;
-            Deque<TreeNode> stack = new LinkedList<>();
+        int res = 0;
 
-            stack.addLast(root);
-            while (!stack.isEmpty()) {
-                root = stack.removeLast();
-                res.add(root.val);
-                if (root.right != null) stack.addLast(root.right);
-                if (root.left != null) stack.addLast(root.left);
+        public int diameterOfBinaryTree(TreeNode root) {
+            dfs(root);
+            return res;
+        }
+
+        //返回该节点的深度
+        int dfs(TreeNode node) {
+            if (node == null) {
+                return 0;
             }
 
-            return res;
+            int leftDepth = dfs(node.left);
+            int rightDepth = dfs(node.right);
+            res = Math.max((leftDepth + rightDepth), res);
+            return Math.max(leftDepth, rightDepth) + 1;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
