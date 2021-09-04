@@ -40,27 +40,23 @@ public class B_CheckCompletenessOfABinaryTree {
      */
     class Solution {
         public boolean isCompleteTree(TreeNode root) {
-            //BFS遍历
+            //BFS
+            boolean flag = false;   //标记是否访问到null节点
             Queue<TreeNode> queue = new LinkedList<>();
             queue.add(root);
-            int levelSize;  //第n层最多有2的(n-1)次方个节点
-            boolean reachNull = false;  //记录是否遇到null节点
 
             while (!queue.isEmpty()) {
-                levelSize = queue.size();
-                for (int i = 0; i < levelSize; i++) {
-                    TreeNode cur = queue.remove();
-                    if (cur == null) {
-                        reachNull = true;
-                    } else {
-                        if (reachNull) {
-                            //如果已经遇到过null节点，直接返回false
-                            return false;
-                        }
-                        queue.add(cur.left);
-                        queue.add(cur.right);
-                    }
+                TreeNode cur = queue.remove();
 
+                //如果已经访问到null节点后，再访问到非空节点，说明不是完全二叉树
+                if (flag && cur != null) {
+                    return false;
+                }
+                if (cur == null) {
+                    flag = true;    //已经访问到null节点
+                } else {
+                    queue.add(cur.left);
+                    queue.add(cur.right);
                 }
             }
 

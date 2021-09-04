@@ -14,12 +14,13 @@ public class B_CoinChange2 {
         int cnt = 0;
 
         public int change(int amount, int[] coins) {
-            int[] dp = new int[amount + 1]; //dp[i]表示凑成金额i有多少种不同的组合方案
+            int[] dp = new int[amount + 1];     //dp[i]表示凑成金额i的可选组合数
             dp[0] = 1;
-            //完全背包的选择方案的组合
-            for (int i = 0; i < coins.length; i++) {
-                for (int j = coins[i]; j <= amount; j++) {
-                    dp[j] = dp[j] + dp[j - coins[i]];
+            for (int coin : coins) {
+                for (int i = 0; i < dp.length; i++) {
+                    if (i - coin >= 0) {
+                        dp[i] += dp[i - coin];
+                    }
                 }
             }
 

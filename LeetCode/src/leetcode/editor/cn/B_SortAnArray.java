@@ -9,25 +9,22 @@ public class B_SortAnArray {
     @Test
     public void test() {
         Solution solution = new Solution();
-
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] sortArray(int[] nums) {
-            //归并排序
+            //建立最大堆：根节点应该大于左右孩子的值
             buildMaxHeap(nums);
-            int len = nums.length;
-            for (int i = len; i > 1; i--) {
-                swap(nums, 0, i - 1);   //确定一个元素的顺序
-                heapify(nums, 0, i - 1);
+            for (int i = 0; i < nums.length; i++) {
+                swap(nums, 0, nums.length - 1 - i);
+                heapify(nums, 0, nums.length - 1 - i);
             }
             return nums;
         }
 
-        //第一次初始化最大堆
         void buildMaxHeap(int[] nums) {
-            //从最后一个非叶节点倒序调整
+            //从最后一个非叶节点开始处理
             int idx = nums.length / 2 - 1;
             for (int i = idx; i >= 0; i--) {
                 heapify(nums, i, nums.length);
@@ -36,19 +33,21 @@ public class B_SortAnArray {
 
         void heapify(int[] nums, int idx, int len) {
             int temp = nums[idx];
-            //类似插入排序，将节点idx下沉到合适的位置
-            while (idx * 2 + 1 < len) {
-                int childIdx = idx * 2 + 1;
+            int childIdx;
+            while ((childIdx = idx * 2 + 1) < len) {
                 if (childIdx + 1 < len && nums[childIdx + 1] > nums[childIdx]) {
                     childIdx++;
                 }
                 if (temp < nums[childIdx]) {
                     nums[idx] = nums[childIdx];
                     idx = childIdx;
-                } else break;
+                }
+                //temp>nums[childIdx]
+                else break;
             }
             nums[idx] = temp;
         }
+
 
         void swap(int[] nums, int i, int j) {
             int temp = nums[i];

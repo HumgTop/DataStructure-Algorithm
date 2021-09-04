@@ -10,7 +10,8 @@ public class B_TrappingRainWater {
     @Test
     public void test() {
         Solution solution = new Solution();
-
+        int[] arr = LeetCodeUtils.get1dArr("[0,1,0,2,1,0,1,3,2,1,2,1]");
+        System.out.println(solution.trap(arr));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -20,17 +21,17 @@ public class B_TrappingRainWater {
             int res = 0;
 
             for (int i = 0; i < height.length; i++) {
+                //不满足单调递减栈定义时进行结算
                 while (!stack.isEmpty() && height[stack.peekLast()] < height[i]) {
-                    int bottom = stack.removeLast();
+                    int hIdx = stack.removeLast();  //height[hIdx]为底部高度
                     if (stack.isEmpty()) break;
 
-                    int left = stack.peekLast();    //左边界下标
-                    int right = i;  //右边界下标
+                    int left = stack.peekLast();
+                    int right = i;
                     int width = right - left - 1;
-                    int h = Math.min(height[left], height[right]) - height[bottom];
+                    int h = Math.min(height[left], height[right]) - height[hIdx];
                     res += width * h;
                 }
-
                 stack.addLast(i);
             }
 
