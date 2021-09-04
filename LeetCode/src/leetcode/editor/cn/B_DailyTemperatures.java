@@ -1,5 +1,12 @@
 package leetcode.editor.cn;
 
+<<<<<<< HEAD
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class B_DailyTemperatures {
+    public static void main(String[] args) {
+=======
 import org.junit.Test;
 
 import java.util.Deque;
@@ -10,12 +17,26 @@ public class B_DailyTemperatures {
     @Test
     public void test() {
         Solution solution = new Solution();
+>>>>>>> origin/master
 
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] dailyTemperatures(int[] temperatures) {
+<<<<<<< HEAD
+            //单调递减栈
+            Deque<Integer> stack = new LinkedList<>();  //存入temp数组下标
+            int[] res = new int[temperatures.length];
+            for (int i = 0; i < temperatures.length; i++) {
+                //结算
+                while (!stack.isEmpty() && temperatures[stack.peekLast()] < temperatures[i]) {
+                    Integer idx = stack.removeLast();
+                    res[idx] = i - idx;
+                }
+                stack.addLast(i);
+            }
+=======
             int n = temperatures.length;
             int[] res = new int[n];
             //单调递减栈
@@ -34,9 +55,14 @@ public class B_DailyTemperatures {
             while (!stack.isEmpty()) {
                 res[stack.removeLast()] = 0;
             }
+>>>>>>> origin/master
 
             return res;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
 }
